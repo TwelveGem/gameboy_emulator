@@ -54,3 +54,4 @@ bool cpu_execute();
 
 // CPU Operations
 void cpu_noop();  // 0x00
+void cpu_jp_nn(); // 0xC3

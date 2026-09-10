@@ -197,7 +197,7 @@ const struct gb_cpu_instruction instructions[256] = {
     {"RET NZ", 0, nullptr},      // 0xC0
     {"POP BC", 0, nullptr},      // 0xC1
     {"JP NZ, nn", 2, nullptr},   // 0xC2
-    {"JP nn", 2, nullptr},       // 0xC3
+    {"JP nn", 2, cpu_jp_nn},     // 0xC3
     {"CALL NZ, nn", 2, nullptr}, // 0xC4
     {"PUSH BC", 0, nullptr},     // 0xC5
     {"ADD A, n", 1, nullptr},    // 0xC6
