@@ -50,4 +50,4 @@ extern gb_cpu_registers cpu_registers;
 
 void cpu_reset();
 void cpu_fetch();
-void cpu_execute();
+bool cpu_execute();
