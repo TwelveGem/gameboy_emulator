@@ -45,3 +45,14 @@ bool cpu_execute() {
 
 void cpu_noop() { core_advance_cpu_clocks(4); }
 
+void cpu_jp_nn() {
+    core_advance_cpu_clocks(4);
+    uint32_t temp = cartridge_data[cpu_registers.pc++];
+    cpu_registers.pc &= 0xFFFF;
+    core_advance_cpu_clocks(4);
+    temp |= ((uint32_t)cartridge_data[cpu_registers.pc++]) << 8;
+    cpu_registers.pc &= 0xFFFF;
+    core_advance_cpu_clocks(4);
+    cpu_registers.pc = temp;
+    core_advance_cpu_clocks(4);
+}
