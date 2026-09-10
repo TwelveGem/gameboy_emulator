@@ -1,12 +1,13 @@
 #include "cpu.h"
 #include "cart.h"
 #include "cpu_instructions.h"
+#include "emulator_core.h"
 #include <stdio.h>
 
 gb_cpu_registers cpu_registers;
 uint8_t cpu_current_op_code = 0;
 uint32_t cpu_instruction_counter = 0;
-void *cpu_current_instruction_execute = nullptr;
+cpu_execute_op cpu_current_instruction_execute = nullptr;
 
 void cpu_reset() {
     // After executing boot rom registers should have these values
@@ -31,12 +32,16 @@ bool cpu_execute() {
             instructions[cpu_current_op_code];
         const uint8_t pchi = ((cpu_registers.pc - 1) & 0xFF00) >> 8;
         const uint8_t pclo = ((cpu_registers.pc - 1) & 0xFF);
-        printf("Unknown instruction at: %.2X%.2X (%s), count %i\n", pchi, pclo,
-               instruction.disassembly, cpu_instruction_counter);
+        printf("Unknown instruction %.2X at: %.2X%.2X (%s), count %i\n",
+               cpu_current_op_code, pchi, pclo, instruction.disassembly,
+               cpu_instruction_counter);
         return false;
     }
 
-    ((cpu_execute_op)cpu_current_instruction_execute)();
+    cpu_current_instruction_execute();
 
     return true;
 }
+
+void cpu_noop() { core_advance_cpu_clocks(4); }
+

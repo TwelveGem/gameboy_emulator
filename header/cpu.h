@@ -51,3 +51,6 @@ extern gb_cpu_registers cpu_registers;
 void cpu_reset();
 void cpu_fetch();
 bool cpu_execute();
+
+// CPU Operations
+void cpu_noop();  // 0x00

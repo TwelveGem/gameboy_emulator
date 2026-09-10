@@ -1,7 +1,8 @@
 #include "cpu_instructions.h"
+#include "cpu.h"
 
 const struct gb_cpu_instruction instructions[256] = {
-    {"NOP", 0, nullptr},         // 0x00
+    {"NOP", 0, cpu_noop},        // 0x00
     {"LD BC,nn", 2, nullptr},    // 0x01
     {"LD (BC), A", 0, nullptr},  // 0x02
     {"INC BC", 0, nullptr},      // 0x03
