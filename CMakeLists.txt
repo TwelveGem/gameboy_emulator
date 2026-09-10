@@ -11,6 +11,6 @@ list(APPEND CMAKE_PREFIX_PATH /opt/homebrew/opt/sdl3 /usr/local/opt/sdl3)
 
 find_package(SDL3 REQUIRED CONFIG)
 
-add_executable(goodboy src/main.cpp src/cart.cpp)
+add_executable(goodboy src/main.cpp src/cart.cpp src/cpu_instructions.cpp src/cpu.cpp)
 target_include_directories(goodboy PRIVATE header)
 target_link_libraries(goodboy PRIVATE SDL3::SDL3)
