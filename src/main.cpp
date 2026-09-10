@@ -5,6 +5,7 @@
 #include <SDL3/SDL_main.h>
 
 #include "cart.h"
+#include "cpu.h"
 
 int SDLCALL goodboy_runapp_callback(int argc, char *argv[]);
 
@@ -24,6 +25,10 @@ int SDLCALL goodboy_runapp_callback(int argc, char *argv[]) {
     if (cart_load(game_path)) {
         cart_print_info();
     }
+
+    cpu_reset();
+    cpu_fetch();
+    cpu_execute();
 
     SDL_Quit();
 
