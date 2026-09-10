@@ -4,6 +4,8 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 
+#include "cart.h"
+
 int SDLCALL goodboy_runapp_callback(int argc, char *argv[]);
 
 int main(int argc, char *argv[]) {
@@ -16,6 +18,12 @@ int SDLCALL goodboy_runapp_callback(int argc, char *argv[]) {
     }
 
     printf("Hello, World!\n");
+
+    const char *game_path = "./games/rhythm-land.gb";
+
+    if (cart_load(game_path)) {
+        cart_print_info();
+    }
 
     SDL_Quit();
 

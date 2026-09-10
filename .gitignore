@@ -29,3 +29,6 @@ _deps/
 
 # macOS
 .DS_Store
+
+# example games
+games/
