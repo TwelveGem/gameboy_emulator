@@ -25,7 +25,7 @@ void cpu_fetch() {
     cpu_current_instruction_execute = instruction.execute;
 }
 
-void cpu_execute() {
+bool cpu_execute() {
     if (!cpu_current_instruction_execute) {
         const gb_cpu_instruction &instruction =
             instructions[cpu_current_op_code];
@@ -33,8 +33,10 @@ void cpu_execute() {
         const uint8_t pclo = ((cpu_registers.pc - 1) & 0xFF);
         printf("Unknown instruction at: %.2X%.2X (%s), count %i\n", pchi, pclo,
                instruction.disassembly, cpu_instruction_counter);
-        return;
+        return false;
     }
 
     ((cpu_execute_op)cpu_current_instruction_execute)();
+
+    return true;
 }
