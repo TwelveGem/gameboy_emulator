@@ -1,7 +1,9 @@
 #include "cpu.h"
 #include "cart.h"
 #include "cpu_instructions.h"
+#include "cpu_routines.h"
 #include "emulator_core.h"
+#include "memory_bus.h"
 #include <stdio.h>
 
 gb_cpu_registers cpu_registers;
@@ -21,7 +23,7 @@ void cpu_reset() {
 
 void cpu_fetch() {
     // TODO: Read from memory bus instead of directly from ROM data
-    cpu_current_op_code = cartridge_data[cpu_registers.pc++];
+    cpu_current_op_code = memory_bus_read(cpu_registers.pc++);
     const gb_cpu_instruction &instruction = instructions[cpu_current_op_code];
     cpu_current_instruction_execute = instruction.execute;
 }
@@ -47,10 +49,10 @@ void cpu_noop() { core_advance_cpu_clocks(4); }
 
 void cpu_jp_nn() {
     core_advance_cpu_clocks(4);
-    uint32_t temp = cartridge_data[cpu_registers.pc++];
+    uint32_t temp = memory_bus_read(cpu_registers.pc++);
     cpu_registers.pc &= 0xFFFF;
     core_advance_cpu_clocks(4);
-    temp |= ((uint32_t)cartridge_data[cpu_registers.pc++]) << 8;
+    temp |= ((uint32_t)memory_bus_read(cpu_registers.pc++)) << 8;
     cpu_registers.pc &= 0xFFFF;
     core_advance_cpu_clocks(4);
     cpu_registers.pc = temp;
