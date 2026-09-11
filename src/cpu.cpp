@@ -6,6 +6,7 @@
 #include <stdio.h>
 
 gb_cpu_registers cpu_registers;
+bool cpu_interrupt_master_enable = false;
 uint8_t cpu_current_op_code = 0;
 uint32_t cpu_instruction_counter = 0;
 cpu_execute_op cpu_current_instruction_execute = nullptr;
@@ -45,6 +46,11 @@ bool cpu_execute() {
 void cpu_noop() { core_advance_cpu_clocks(4); }
 
 void cpu_ld_hl_nn() { cpu_routine_ld_16(cpu_registers.h, cpu_registers.l); }
+
+void cpu_di() {
+    cpu_interrupt_master_enable = false;
+    core_advance_cpu_clocks(4);
+}
 
 void cpu_jp_nn() {
     core_advance_cpu_clocks(4);
