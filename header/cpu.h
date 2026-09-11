@@ -1,6 +1,15 @@
 #pragma once
 #include <stdint.h>
 
+#define SET_FLAG_ZERO(value)       cpu_registers.f = (cpu_registers.f & ~(1UL << 7)) | ((value) << 7);
+#define GET_FLAG_ZERO(value)       ((cpu_registers.f & ~(1UL << 7)) >> 7)
+#define SET_FLAG_SUBTRACT(value)   cpu_registers.f = (cpu_registers.f & ~(1UL << 6)) | ((value) << 6);
+#define GET_FLAG_SUBTRACT(value)   ((cpu_registers.f & ~(1UL << 6)) >> 6)
+#define SET_FLAG_HALF_CARRY(value) cpu_registers.f = (cpu_registers.f & ~(1UL << 5)) | ((value) << 5);
+#define GET_FLAG_HALF_CARRY(value) ((cpu_registers.f & ~(1UL << 5)) >> 5)
+#define SET_FLAG_CARRY(value)      cpu_registers.f = (cpu_registers.f & ~(1UL << 4)) | ((value) << 4);
+#define GET_FLAG_CARRY(value)      ((cpu_registers.f & ~(1UL << 4)) >> 4)
+
 struct gb_cpu_registers {
     union {
         struct {
@@ -53,5 +62,6 @@ void cpu_fetch();
 bool cpu_execute();
 
 // CPU Operations
-void cpu_noop();  // 0x00
-void cpu_jp_nn(); // 0xC3
+void cpu_noop();     // 0x00
+void cpu_ld_hl_nn(); // 0x21
+void cpu_jp_nn();    // 0xC3

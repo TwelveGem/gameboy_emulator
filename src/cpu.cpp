@@ -1,5 +1,4 @@
 #include "cpu.h"
-#include "cart.h"
 #include "cpu_instructions.h"
 #include "cpu_routines.h"
 #include "emulator_core.h"
@@ -30,13 +29,11 @@ void cpu_fetch() {
 
 bool cpu_execute() {
     if (!cpu_current_instruction_execute) {
-        const gb_cpu_instruction &instruction =
-            instructions[cpu_current_op_code];
+        const gb_cpu_instruction &instruction = instructions[cpu_current_op_code];
         const uint8_t pchi = ((cpu_registers.pc - 1) & 0xFF00) >> 8;
         const uint8_t pclo = ((cpu_registers.pc - 1) & 0xFF);
-        printf("Unknown instruction %.2X at: %.2X%.2X (%s), count %i\n",
-               cpu_current_op_code, pchi, pclo, instruction.disassembly,
-               cpu_instruction_counter);
+        printf("Unknown instruction %.2X at: %.2X%.2X (%s), count %i\n", cpu_current_op_code, pchi, pclo,
+               instruction.disassembly, cpu_instruction_counter);
         return false;
     }
 
@@ -46,6 +43,8 @@ bool cpu_execute() {
 }
 
 void cpu_noop() { core_advance_cpu_clocks(4); }
+
+void cpu_ld_hl_nn() { cpu_routine_ld_16(cpu_registers.h, cpu_registers.l); }
 
 void cpu_jp_nn() {
     core_advance_cpu_clocks(4);
