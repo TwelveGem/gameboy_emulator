@@ -64,6 +64,14 @@ bool cpu_execute();
 
 // CPU Operations
 void cpu_noop();     // 0x00
+void cpu_ld_bc_nn(); // 0x01
+void cpu_ld_bc_a();  // 0x02
+void cpu_inc_bc();   // 0x03
+void cpu_inc_b();    // 0x04
+void cpu_dec_b();    // 0x05
+void cpu_ld_b_n();   // 0x06
 void cpu_ld_hl_nn(); // 0x21
+void cpu_ldd_hl_a(); // 0x32
 void cpu_jp_nn();    // 0xC3
+void cpu_ld_a_n();   // 0xF0
 void cpu_di();       // 0xF3
