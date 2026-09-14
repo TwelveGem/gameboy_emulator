@@ -14,24 +14,24 @@ const struct gb_cpu_instruction instructions[256] = {
     {"ADD HL, BC", 0, nullptr},       // 0x09
     {"LD A, (BC)", 0, nullptr},       // 0x0A
     {"DEC BC", 0, nullptr},           // 0x0B
-    {"INC C", 0, nullptr},            // 0x0C
-    {"DEC C", 0, nullptr},            // 0x0D
+    {"INC C", 0, cpu_inc_c},          // 0x0C
+    {"DEC C", 0, cpu_dec_c},          // 0x0D
     {"LD C, n", 1, cpu_ld_c_n},       // 0x0E
     {"RRC A", 0, nullptr},            // 0x0F
     {"STOP", 1, nullptr},             // 0x10
     {"LD DE, nn", 2, cpu_ld_de_nn},   // 0x11
     {"LD (DE), A", 0, nullptr},       // 0x12
-    {"INC DE", 0, nullptr},           // 0x13
-    {"INC D", 0, nullptr},            // 0x14
-    {"DEC D", 0, nullptr},            // 0x15
+    {"INC DE", 0, cpu_inc_de},        // 0x13
+    {"INC D", 0, cpu_inc_d},          // 0x14
+    {"DEC D", 0, cpu_dec_d},          // 0x15
     {"LD D, n", 1, cpu_ld_d_n},       // 0x16
     {"RL A", 0, nullptr},             // 0x17
     {"JR n", 1, nullptr},             // 0x18
     {"ADD HL, DE", 0, nullptr},       // 0x19
     {"LD A, (DE)", 0, nullptr},       // 0x1A
     {"DEC DE", 0, nullptr},           // 0x1B
-    {"INC E", 0, nullptr},            // 0x1C
-    {"DEC E", 0, nullptr},            // 0x1D
+    {"INC E", 0, cpu_inc_e},          // 0x1C
+    {"DEC E", 0, cpu_dec_e},          // 0x1D
     {"LD E, n", 1, cpu_ld_e_n},       // 0x1E
     {"RR A", 0, nullptr},             // 0x1F
     {"JR NZ, n", 1, nullptr},         // 0x20
