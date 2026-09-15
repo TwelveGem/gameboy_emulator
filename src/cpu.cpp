@@ -385,11 +385,17 @@ void cpu_jp_nn() {
     core_advance_cpu_clocks(4);
 }
 
+// 0xC4
+void cpu_call_nz_nn() { cpu_routine_call_conditional_nnnn(GET_FLAG_ZERO == 0x00); }
+
 // 0xC5
 void cpu_push_bc() { cpu_routine_push_16(cpu_registers.b, cpu_registers.c); }
 
 // 0xC7
 void cpu_rst_00() { cpu_routine_rst_nnnn(0x0000); }
+
+// 0xCC
+void cpu_call_z_nn() { cpu_routine_call_conditional_nnnn(GET_FLAG_ZERO); }
 
 // 0xCF
 void cpu_rst_08() { cpu_routine_rst_nnnn(0x0008); }
@@ -400,11 +406,17 @@ void cpu_pop_de() {
     cpu_registers.f &= 0xF0; // All flags are reset
 }
 
+// 0xD4
+void cpu_call_nc_nn() { cpu_routine_call_conditional_nnnn(GET_FLAG_CARRY == 0x00); }
+
 // 0xD5
 void cpu_push_de() { cpu_routine_push_16(cpu_registers.d, cpu_registers.e); }
 
 // 0xD7
 void cpu_rst_10() { cpu_routine_rst_nnnn(0x0010); }
+
+// 0xDC
+void cpu_call_c_nn() { cpu_routine_call_conditional_nnnn(GET_FLAG_CARRY); }
 
 // 0xDF
 void cpu_rst_18() { cpu_routine_rst_nnnn(0x0018); }
