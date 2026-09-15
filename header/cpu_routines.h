@@ -62,6 +62,17 @@
         core_advance_cpu_clocks(4);                                                                                    \
     }
 
+#define cpu_routine_add_a_8(reg8)                                                                                      \
+    {                                                                                                                  \
+        SET_FLAG_SUBTRACT(0);                                                                                          \
+        uint32_t temp = cpu_registers.a;                                                                               \
+        SET_FLAG_HALF_CARRY(((temp & 0xF) + ((uint32_t)reg8 & 0xF)) > 0xF);                                            \
+        cpu_registers.a += reg8;                                                                                       \
+        SET_FLAG_ZERO(cpu_registers.a == 0);                                                                           \
+        SET_FLAG_CARRY(temp > cpu_registers.a);                                                                        \
+        core_advance_cpu_clocks(4);                                                                                    \
+    }
+
 #define cpu_routine_add_hl_16(reg16)                                                                                   \
     {                                                                                                                  \
         SET_FLAG_SUBTRACT(0);                                                                                          \
