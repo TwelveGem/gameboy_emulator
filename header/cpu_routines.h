@@ -158,3 +158,20 @@
         SET_FLAG_ZERO(cpu_registers.a == reg8);                                                                        \
         core_advance_cpu_clocks(4);                                                                                    \
     }
+
+#define cpu_routine_rst_nnnn(addr)                                                                                     \
+    {                                                                                                                  \
+        core_advance_cpu_clocks(4);                                                                                    \
+        cpu_registers.sp--;                                                                                            \
+        cpu_registers.sp &= 0xFFFF;                                                                                    \
+        const int8_t pchi = (cpu_registers.pc & 0xFF00) >> 8;                                                          \
+        core_advance_cpu_clocks(4);                                                                                    \
+        memory_bus_write(cpu_registers.sp, pchi);                                                                      \
+        core_advance_cpu_clocks(4);                                                                                    \
+        cpu_registers.sp--;                                                                                            \
+        cpu_registers.sp &= 0xFFFF;                                                                                    \
+        const uint8_t pclo = cpu_registers.pc & 0xFF;                                                                  \
+        memory_bus_write(cpu_registers.sp, pclo);                                                                      \
+        cpu_registers.pc = addr;                                                                                       \
+        core_advance_cpu_clocks(4);                                                                                    \
+    }
