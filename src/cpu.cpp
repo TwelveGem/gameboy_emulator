@@ -75,6 +75,19 @@ void cpu_rlca() {
     core_advance_cpu_clocks(4);
 }
 
+// 0x08
+void cpu_ld_nn_sp() {
+    core_advance_cpu_clocks(4);
+    uint16_t addr = memory_bus_read(cpu_registers.pc++);
+    core_advance_cpu_clocks(4);
+    addr |= ((uint16_t)memory_bus_read(cpu_registers.pc++)) << 8;
+    core_advance_cpu_clocks(4);
+    memory_bus_write(addr++, (cpu_registers.sp & 0xFF));
+    core_advance_cpu_clocks(4);
+    memory_bus_write(addr, ((cpu_registers.sp & 0xFF00) >> 8));
+    core_advance_cpu_clocks(4);
+}
+
 // 0x09
 void cpu_add_hl_bc() { cpu_routine_add_hl_16(cpu_registers.bc); }
 

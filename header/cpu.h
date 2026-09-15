@@ -72,6 +72,7 @@ void cpu_inc_b();     // 0x04
 void cpu_dec_b();     // 0x05
 void cpu_ld_b_n();    // 0x06
 void cpu_rlca();      // 0x07
+void cpu_ld_nn_sp();  // 0x08
 void cpu_add_hl_bc(); // 0x09
 void cpu_ld_a_bc();   // 0x0A
 void cpu_dec_bc();    // 0x0B
