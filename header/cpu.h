@@ -152,7 +152,15 @@ void cpu_adc_a_h(); // 0x8C
 void cpu_adc_a_l(); // 0x8D
 
 // 0x8
+
 // 0x9
+void cpu_sub_a_b(); // 0x90
+void cpu_sub_a_c(); // 0x91
+void cpu_sub_a_d(); // 0x92
+void cpu_sub_a_e(); // 0x93
+void cpu_sub_a_h(); // 0x94
+void cpu_sub_a_l(); // 0x95
+
 // 0xA
 // 0xB
 
