@@ -348,6 +348,24 @@ void cpu_or_a_h() { cpu_routine_or_a_8(cpu_registers.h); }
 // 0xB5
 void cpu_or_a_l() { cpu_routine_or_a_8(cpu_registers.l); }
 
+// 0xB8
+void cpu_cp_a_b() { cpu_routine_cp_a_8(cpu_registers.b); }
+
+// 0xB9
+void cpu_cp_a_c() { cpu_routine_cp_a_8(cpu_registers.c); }
+
+// 0xBA
+void cpu_cp_a_d() { cpu_routine_cp_a_8(cpu_registers.d); }
+
+// 0xBB
+void cpu_cp_a_e() { cpu_routine_cp_a_8(cpu_registers.e); }
+
+// 0xBC
+void cpu_cp_a_h() { cpu_routine_cp_a_8(cpu_registers.h); }
+
+// 0xBD
+void cpu_cp_a_l() { cpu_routine_cp_a_8(cpu_registers.l); }
+
 // 0xC3
 void cpu_jp_nn() {
     core_advance_cpu_clocks(4);
