@@ -41,6 +41,13 @@
         core_advance_cpu_clocks(4);                                                                                    \
     }
 
+#define cpu_routine_dec_16(reg16)                                                                                      \
+    {                                                                                                                  \
+        core_advance_cpu_clocks(4);                                                                                    \
+        reg16 = reg16 - 1;                                                                                             \
+        core_advance_cpu_clocks(4);                                                                                    \
+    }
+
 #define cpu_routine_ld_ptr8(reg16, reg8)                                                                               \
     {                                                                                                                  \
         core_advance_cpu_clocks(4);                                                                                    \
@@ -50,5 +57,7 @@
 
 #define cpu_routine_ld_ptr_16(reg8, reg16)                                                                             \
     {                                                                                                                  \
+        core_advance_cpu_clocks(4);                                                                                    \
         reg8 = memory_bus_read(reg16);                                                                                 \
+        core_advance_cpu_clocks(4);                                                                                    \
     }
