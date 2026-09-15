@@ -144,6 +144,12 @@ void cpu_add_a_e(); // 0x83
 void cpu_add_a_h(); // 0x84
 void cpu_add_a_l(); // 0x85
 void cpu_add_a_a(); // 0x87
+void cpu_adc_a_b(); // 0x88
+void cpu_adc_a_c(); // 0x89
+void cpu_adc_a_d(); // 0x8A
+void cpu_adc_a_e(); // 0x8B
+void cpu_adc_a_h(); // 0x8C
+void cpu_adc_a_l(); // 0x8D
 
 // 0x8
 // 0x9
