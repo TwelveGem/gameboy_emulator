@@ -175,3 +175,28 @@
         cpu_registers.pc = addr;                                                                                       \
         core_advance_cpu_clocks(4);                                                                                    \
     }
+
+#define cpu_routine_push_16(reg_hi, reg_low)                                                                           \
+    {                                                                                                                  \
+        core_advance_cpu_clocks(4);                                                                                    \
+        cpu_registers.sp--;                                                                                            \
+        cpu_registers.sp &= 0xFFFF;                                                                                    \
+        core_advance_cpu_clocks(4);                                                                                    \
+        memory_bus_write(cpu_registers.sp, reg_hi);                                                                    \
+        core_advance_cpu_clocks(4);                                                                                    \
+        cpu_registers.sp--;                                                                                            \
+        cpu_registers.sp &= 0xFFFF;                                                                                    \
+        memory_bus_write(cpu_registers.sp, reg_low);                                                                   \
+        core_advance_cpu_clocks(4);                                                                                    \
+    }
+
+#define cpu_routine_pop_16(reg_hi, reg_low)                                                                            \
+    {                                                                                                                  \
+        core_advance_cpu_clocks(4);                                                                                    \
+        reg_low = memory_bus_read(cpu_registers.sp++);                                                                 \
+        cpu_registers.sp &= 0xFFFF;                                                                                    \
+        core_advance_cpu_clocks(4);                                                                                    \
+        reg_hi = memory_bus_read(cpu_registers.sp++);                                                                  \
+        cpu_registers.sp &= 0xFFFF;                                                                                    \
+        core_advance_cpu_clocks(4);                                                                                    \
+    }
