@@ -375,6 +375,9 @@ void cpu_pop_bc() {
     cpu_registers.f &= 0xF0; // All flags are reset
 }
 
+// 0xC2
+void cpu_jp_nz() { cpu_routine_jump_conditional_nnnn(GET_FLAG_ZERO == 0x00); }
+
 // 0xC3
 void cpu_jp_nn() {
     core_advance_cpu_clocks(4);
@@ -400,6 +403,9 @@ void cpu_rst_00() { cpu_routine_rst_nnnn(0x0000); }
 // 0xC8
 void cpu_ret_z() { cpu_routine_return_conditional(GET_FLAG_ZERO); }
 
+// 0xCA
+void cpu_jp_z() { cpu_routine_jump_conditional_nnnn(GET_FLAG_ZERO); }
+
 // 0xCC
 void cpu_call_z_nn() { cpu_routine_call_conditional_nnnn(GET_FLAG_ZERO); }
 
@@ -415,6 +421,9 @@ void cpu_pop_de() {
     cpu_registers.f &= 0xF0; // All flags are reset
 }
 
+// 0xD2
+void cpu_jp_nc() { cpu_routine_jump_conditional_nnnn(GET_FLAG_CARRY == 0x00); }
+
 // 0xD4
 void cpu_call_nc_nn() { cpu_routine_call_conditional_nnnn(GET_FLAG_CARRY == 0x00); }
 
@@ -426,6 +435,9 @@ void cpu_rst_10() { cpu_routine_rst_nnnn(0x0010); }
 
 // 0xD8
 void cpu_ret_c() { cpu_routine_return_conditional(GET_FLAG_CARRY); }
+
+// 0xDA
+void cpu_jp_c() { cpu_routine_jump_conditional_nnnn(GET_FLAG_CARRY); }
 
 // 0xDC
 void cpu_call_c_nn() { cpu_routine_call_conditional_nnnn(GET_FLAG_CARRY); }
