@@ -162,28 +162,28 @@ const struct gb_cpu_instruction instructions[256] = {
     {"SBC A, L", 0, cpu_sbc_a_l},     // 0x9D
     {"SBC A, (HL)", 0, nullptr},      // 0x9E
     {"SBC A, A", 0, nullptr},         // 0x9F
-    {"AND B", 0, nullptr},            // 0xA0
-    {"AND C", 0, nullptr},            // 0xA1
-    {"AND D", 0, nullptr},            // 0xA2
-    {"AND E", 0, nullptr},            // 0xA3
-    {"AND H", 0, nullptr},            // 0xA4
-    {"AND L", 0, nullptr},            // 0xA5
+    {"AND A, B", 0, cpu_and_a_b},     // 0xA0
+    {"AND A, C", 0, cpu_and_a_c},     // 0xA1
+    {"AND A, D", 0, cpu_and_a_d},     // 0xA2
+    {"AND A, E", 0, cpu_and_a_e},     // 0xA3
+    {"AND A, H", 0, cpu_and_a_h},     // 0xA4
+    {"AND A, L", 0, cpu_and_a_l},     // 0xA5
     {"AND (HL)", 0, nullptr},         // 0xA6
     {"AND A", 0, nullptr},            // 0xA7
-    {"XOR B", 0, nullptr},            // 0xA8
-    {"XOR C", 0, nullptr},            // 0xA9
-    {"XOR D", 0, nullptr},            // 0xAA
-    {"XOR E", 0, nullptr},            // 0xAB
-    {"XOR H", 0, nullptr},            // 0xAC
-    {"XOR L", 0, nullptr},            // 0xAD
+    {"XOR A, B", 0, cpu_xor_a_b},     // 0xA8
+    {"XOR A, C", 0, cpu_xor_a_c},     // 0xA9
+    {"XOR A, D", 0, cpu_xor_a_d},     // 0xAA
+    {"XOR A, E", 0, cpu_xor_a_e},     // 0xAB
+    {"XOR A, H", 0, cpu_xor_a_h},     // 0xAC
+    {"XOR A, L", 0, cpu_xor_a_l},     // 0xAD
     {"XOR (HL)", 0, nullptr},         // 0xAE
     {"XOR A", 0, nullptr},            // 0xAF
-    {"OR B", 0, nullptr},             // 0xB0
-    {"OR C", 0, nullptr},             // 0xB1
-    {"OR D", 0, nullptr},             // 0xB2
-    {"OR E", 0, nullptr},             // 0xB3
-    {"OR H", 0, nullptr},             // 0xB4
-    {"OR L", 0, nullptr},             // 0xB5
+    {"OR A, B", 0, cpu_or_a_b},       // 0xB0
+    {"OR A, C", 0, cpu_or_a_c},       // 0xB1
+    {"OR A, D", 0, cpu_or_a_d},       // 0xB2
+    {"OR A, E", 0, cpu_or_a_e},       // 0xB3
+    {"OR A, H", 0, cpu_or_a_h},       // 0xB4
+    {"OR A, L", 0, cpu_or_a_l},       // 0xB5
     {"OR (HL)", 0, nullptr},          // 0xB6
     {"OR A", 0, nullptr},             // 0xB7
     {"CP B", 0, nullptr},             // 0xB8

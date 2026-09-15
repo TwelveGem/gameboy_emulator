@@ -294,6 +294,60 @@ void cpu_sbc_a_h() { cpu_routine_sbc_a_8(cpu_registers.h); }
 // 0x9D
 void cpu_sbc_a_l() { cpu_routine_sbc_a_8(cpu_registers.l); }
 
+// 0xA0
+void cpu_and_a_b() { cpu_routine_and_a_8(cpu_registers.b); }
+
+// 0xA1
+void cpu_and_a_c() { cpu_routine_and_a_8(cpu_registers.c); }
+
+// 0xA2
+void cpu_and_a_d() { cpu_routine_and_a_8(cpu_registers.d); }
+
+// 0xA3
+void cpu_and_a_e() { cpu_routine_and_a_8(cpu_registers.e); }
+
+// 0xA4
+void cpu_and_a_h() { cpu_routine_and_a_8(cpu_registers.h); }
+
+// 0xA5
+void cpu_and_a_l() { cpu_routine_and_a_8(cpu_registers.l); }
+
+// 0xA8
+void cpu_xor_a_b() { cpu_routine_xor_a_8(cpu_registers.b); }
+
+// 0xA9
+void cpu_xor_a_c() { cpu_routine_xor_a_8(cpu_registers.c); }
+
+// 0xAA
+void cpu_xor_a_d() { cpu_routine_xor_a_8(cpu_registers.d); }
+
+// 0xAB
+void cpu_xor_a_e() { cpu_routine_xor_a_8(cpu_registers.e); }
+
+// 0xAC
+void cpu_xor_a_h() { cpu_routine_xor_a_8(cpu_registers.h); }
+
+// 0xAD
+void cpu_xor_a_l() { cpu_routine_xor_a_8(cpu_registers.l); }
+
+// 0xB0
+void cpu_or_a_b() { cpu_routine_or_a_8(cpu_registers.b); }
+
+// 0xB1
+void cpu_or_a_c() { cpu_routine_or_a_8(cpu_registers.c); }
+
+// 0xB2
+void cpu_or_a_d() { cpu_routine_or_a_8(cpu_registers.d); }
+
+// 0xB3
+void cpu_or_a_e() { cpu_routine_or_a_8(cpu_registers.e); }
+
+// 0xB4
+void cpu_or_a_h() { cpu_routine_or_a_8(cpu_registers.h); }
+
+// 0xB5
+void cpu_or_a_l() { cpu_routine_or_a_8(cpu_registers.l); }
+
 // 0xC3
 void cpu_jp_nn() {
     core_advance_cpu_clocks(4);
