@@ -94,6 +94,9 @@ void cpu_dec_d() { cpu_routine_dec_8(cpu_registers.d); }
 // 0x16
 void cpu_ld_d_n() { cpu_routine_ld_8(cpu_registers.d); }
 
+// 0x1A
+void cpu_ld_a_de() { cpu_routine_ld_ptr_16(cpu_registers.a, cpu_registers.de); }
+
 // 0x1C
 void cpu_inc_e() { cpu_routine_inc_8(cpu_registers.e); }
 
