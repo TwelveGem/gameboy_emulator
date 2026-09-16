@@ -156,7 +156,7 @@ void cpu_rla() {
     SET_FLAG_SUBTRACT(0);
     SET_FLAG_HALF_CARRY(0);
     SET_FLAG_CARRY((cpu_registers.a & 0x80) > 0);
-    cpu_registers.a = cpu_registers.a << 1 | GET_FLAG_CARRY;
+    cpu_registers.a = (cpu_registers.a << 1) | GET_FLAG_CARRY;
 }
 
 // 0x19
