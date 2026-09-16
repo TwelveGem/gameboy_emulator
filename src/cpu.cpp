@@ -12,6 +12,7 @@ uint8_t cpu_current_op_code = 0;
 uint32_t cpu_instruction_counter = 0;
 cpu_execute_op cpu_current_instruction_execute = nullptr;
 uint8_t cpu_halt_count = 0; // 0 == not halted, 1 == halt instruction, 2 == stop instruction
+bool cpu_halt_bug = false;
 
 void cpu_reset() {
     // After executing boot rom registers should have these values
@@ -36,10 +37,14 @@ void cpu_tick() {
 }
 
 void cpu_fetch() {
-    // TODO: Read from memory bus instead of directly from ROM data
     cpu_current_op_code = memory_bus_read(cpu_registers.pc++);
     const gb_cpu_instruction &instruction = instructions[cpu_current_op_code];
     cpu_current_instruction_execute = instruction.execute;
+
+    if (cpu_halt_bug) {
+        cpu_registers.pc--; // Repeat one byte during halt bug
+        cpu_halt_bug = false;
+    }
 }
 
 bool cpu_execute() {
@@ -678,6 +683,18 @@ void cpu_ld_hl_h() { cpu_routine_ld_ptr8(cpu_registers.hl, cpu_registers.h); }
 // 0x75
 void cpu_ld_hl_l() { cpu_routine_ld_ptr8(cpu_registers.hl, cpu_registers.l); }
 
+void cpu_halt() {
+    core_advance_cpu_clocks(4);
+    const uint8_t interrupt_enable = memory_bus_read(ADDR_IO_IE);
+    const uint8_t interrupt_flag = memory_bus_read(ADDR_IO_IF);
+    const bool interrupt_pending = ((interrupt_enable & interrupt_flag) & 0x1F) != 0;
+    if (!interrupt_master_enable && interrupt_pending != 0) {
+        cpu_halt_bug = true;
+    } else {
+        cpu_halt_count = 1;
+    }
+}
+
 // 0x77
 void cpu_ld_hl_a() { cpu_routine_ld_ptr8(cpu_registers.hl, cpu_registers.a); }
 
@@ -744,6 +761,19 @@ void cpu_add_a_h() { cpu_routine_add_a_8(cpu_registers.h); }
 // 0x85
 void cpu_add_a_l() { cpu_routine_add_a_8(cpu_registers.l); }
 
+// 0x86
+void cpu_add_a_hl() {
+    core_advance_cpu_clocks(4);
+    SET_FLAG_SUBTRACT(0);
+    uint32_t temp_a = cpu_registers.a;
+    uint32_t temp_hl = memory_bus_read(cpu_registers.hl);
+    SET_FLAG_HALF_CARRY(((temp_a & 0xF) + (temp_hl & 0xF)) > 0xF);
+    core_advance_cpu_clocks(4);
+    cpu_registers.a += temp_hl;
+    SET_FLAG_ZERO(cpu_registers.a == 0);
+    SET_FLAG_CARRY(temp_a > cpu_registers.a);
+}
+
 // 0x87
 void cpu_add_a_a() { cpu_routine_add_a_8(cpu_registers.a); }
 
@@ -765,6 +795,16 @@ void cpu_adc_a_h() { cpu_routine_adc_a_8(cpu_registers.h); }
 // 0x8D
 void cpu_adc_a_l() { cpu_routine_adc_a_8(cpu_registers.l); }
 
+// 0x8E
+void cpu_adc_a_hl() {
+    core_advance_cpu_clocks(4);
+    uint8_t temp = memory_bus_read(cpu_registers.hl);
+    cpu_routine_adc_a_8(temp);
+}
+
+// 0x8F
+void cpu_adc_a_a() { cpu_routine_adc_a_8(cpu_registers.a); }
+
 // 0x90
 void cpu_sub_a_b() { cpu_routine_sub_a_8(cpu_registers.b); }
 
@@ -782,6 +822,16 @@ void cpu_sub_a_h() { cpu_routine_sub_a_8(cpu_registers.h); }
 
 // 0x95
 void cpu_sub_a_l() { cpu_routine_sub_a_8(cpu_registers.l); }
+
+// 0x96
+void cpu_sub_a_hl() {
+    core_advance_cpu_clocks(4);
+    uint8_t temp = memory_bus_read(cpu_registers.hl);
+    cpu_routine_sub_a_8(temp);
+}
+
+// 0x97
+void cpu_sub_a_a() { cpu_routine_sub_a_8(cpu_registers.a); }
 
 // 0x98
 void cpu_sbc_a_b() { cpu_routine_sbc_a_8(cpu_registers.b); }
@@ -801,6 +851,16 @@ void cpu_sbc_a_h() { cpu_routine_sbc_a_8(cpu_registers.h); }
 // 0x9D
 void cpu_sbc_a_l() { cpu_routine_sbc_a_8(cpu_registers.l); }
 
+// 0x9E
+void cpu_sbc_a_hl() {
+    core_advance_cpu_clocks(4);
+    uint8_t temp = memory_bus_read(cpu_registers.hl);
+    cpu_routine_sbc_a_8(temp);
+}
+
+// 0x9F
+void cpu_sbc_a_a() { cpu_routine_sbc_a_8(cpu_registers.a); }
+
 // 0xA0
 void cpu_and_a_b() { cpu_routine_and_a_8(cpu_registers.b); }
 
@@ -818,6 +878,16 @@ void cpu_and_a_h() { cpu_routine_and_a_8(cpu_registers.h); }
 
 // 0xA5
 void cpu_and_a_l() { cpu_routine_and_a_8(cpu_registers.l); }
+
+// 0xA6
+void cpu_and_a_hl() {
+    core_advance_cpu_clocks(4);
+    uint8_t temp = memory_bus_read(cpu_registers.hl);
+    cpu_routine_and_a_8(temp);
+}
+
+// 0xA7
+void cpu_and_a_a() { cpu_routine_and_a_8(cpu_registers.a); }
 
 // 0xA8
 void cpu_xor_a_b() { cpu_routine_xor_a_8(cpu_registers.b); }
@@ -837,6 +907,16 @@ void cpu_xor_a_h() { cpu_routine_xor_a_8(cpu_registers.h); }
 // 0xAD
 void cpu_xor_a_l() { cpu_routine_xor_a_8(cpu_registers.l); }
 
+// 0xAE
+void cpu_xor_a_hl() {
+    core_advance_cpu_clocks(4);
+    uint8_t temp = memory_bus_read(cpu_registers.hl);
+    cpu_routine_xor_a_8(temp);
+}
+
+// 0xAF
+void cpu_xor_a_a() { cpu_routine_xor_a_8(cpu_registers.a); }
+
 // 0xB0
 void cpu_or_a_b() { cpu_routine_or_a_8(cpu_registers.b); }
 
@@ -855,6 +935,16 @@ void cpu_or_a_h() { cpu_routine_or_a_8(cpu_registers.h); }
 // 0xB5
 void cpu_or_a_l() { cpu_routine_or_a_8(cpu_registers.l); }
 
+// 0xB6
+void cpu_or_a_hl() {
+    core_advance_cpu_clocks(4);
+    uint8_t temp = memory_bus_read(cpu_registers.hl);
+    cpu_routine_or_a_8(temp);
+}
+
+// 0xB7
+void cpu_or_a_a() { cpu_routine_or_a_8(cpu_registers.a); }
+
 // 0xB8
 void cpu_cp_a_b() { cpu_routine_cp_a_8(cpu_registers.b); }
 
@@ -872,6 +962,16 @@ void cpu_cp_a_h() { cpu_routine_cp_a_8(cpu_registers.h); }
 
 // 0xBD
 void cpu_cp_a_l() { cpu_routine_cp_a_8(cpu_registers.l); }
+
+// 0xBE
+void cpu_cp_a_hl() {
+    core_advance_cpu_clocks(4);
+    uint8_t temp = memory_bus_read(cpu_registers.hl);
+    cpu_routine_cp_a_8(temp);
+}
+
+// 0xBF
+void cpu_cp_a_a() { cpu_routine_cp_a_8(cpu_registers.a); }
 
 // 0xC0
 void cpu_ret_nz() { cpu_routine_return_conditional(GET_FLAG_ZERO == 0x00); }

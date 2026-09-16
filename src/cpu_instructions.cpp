@@ -113,14 +113,14 @@ const struct gb_cpu_instruction instructions[256] = {
     {"LD L, H", 0, cpu_ld_l_h},         // 0x6C
     {"LD L, L", 0, cpu_ld_l_l},         // 0x6D
     {"LD L, (HL)", 0, cpu_ld_l_hl},     // 0x6E
-    {"LD L, A", 0, nullptr},            // 0x6F
+    {"LD L, A", 0, cpu_ld_l_a},         // 0x6F
     {"LD (HL), B", 0, cpu_ld_hl_b},     // 0x70
     {"LD (HL), C", 0, cpu_ld_hl_c},     // 0x71
     {"LD (HL), D", 0, cpu_ld_hl_d},     // 0x72
     {"LD (HL), E", 0, cpu_ld_hl_e},     // 0x73
     {"LD (HL), H", 0, cpu_ld_hl_h},     // 0x74
     {"LD (HL), L", 0, cpu_ld_hl_l},     // 0x75
-    {"HALT", 0, nullptr},               // 0x76
+    {"HALT", 0, cpu_halt},              // 0x76
     {"LD (HL), A", 0, cpu_ld_hl_a},     // 0x77
     {"LD A, B", 0, cpu_ld_a_b},         // 0x78
     {"LD A, C", 0, cpu_ld_a_c},         // 0x79
@@ -136,7 +136,7 @@ const struct gb_cpu_instruction instructions[256] = {
     {"ADD A, E", 0, cpu_add_a_e},       // 0x83
     {"ADD A, H", 0, cpu_add_a_h},       // 0x84
     {"ADD A, L", 0, cpu_add_a_l},       // 0x85
-    {"ADD A, (HL)", 0, nullptr},        // 0x86
+    {"ADD A, (HL)", 0, cpu_add_a_hl},   // 0x86
     {"ADD A, A", 0, cpu_add_a_a},       // 0x87
     {"ADC A, B", 0, cpu_adc_a_b},       // 0x88
     {"ADC A, C", 0, cpu_adc_a_c},       // 0x89
@@ -144,58 +144,58 @@ const struct gb_cpu_instruction instructions[256] = {
     {"ADC A, E", 0, cpu_adc_a_e},       // 0x8B
     {"ADC A, H", 0, cpu_adc_a_h},       // 0x8C
     {"ADC A, L", 0, cpu_adc_a_l},       // 0x8D
-    {"ADC A, (HL)", 0, nullptr},        // 0x8E
-    {"ADC A, A", 0, nullptr},           // 0x8F
+    {"ADC A, (HL)", 0, cpu_adc_a_hl},   // 0x8E
+    {"ADC A, A", 0, cpu_adc_a_a},       // 0x8F
     {"SUB A, B", 0, cpu_sub_a_b},       // 0x90
     {"SUB A, C", 0, cpu_sub_a_c},       // 0x91
     {"SUB A, D", 0, cpu_sub_a_d},       // 0x92
     {"SUB A, E", 0, cpu_sub_a_e},       // 0x93
     {"SUB A, H", 0, cpu_sub_a_h},       // 0x94
     {"SUB A, L", 0, cpu_sub_a_l},       // 0x95
-    {"SUB (HL)", 0, nullptr},           // 0x96
-    {"SUB A", 0, nullptr},              // 0x97
+    {"SUB (HL)", 0, cpu_sub_a_hl},      // 0x96
+    {"SUB A", 0, cpu_sub_a_a},          // 0x97
     {"SBC A, B", 0, cpu_sbc_a_b},       // 0x98
     {"SBC A, C", 0, cpu_sbc_a_c},       // 0x99
     {"SBC A, D", 0, cpu_sbc_a_d},       // 0x9A
     {"SBC A, E", 0, cpu_sbc_a_e},       // 0x9B
     {"SBC A, H", 0, cpu_sbc_a_h},       // 0x9C
     {"SBC A, L", 0, cpu_sbc_a_l},       // 0x9D
-    {"SBC A, (HL)", 0, nullptr},        // 0x9E
-    {"SBC A, A", 0, nullptr},           // 0x9F
+    {"SBC A, (HL)", 0, cpu_sbc_a_hl},   // 0x9E
+    {"SBC A, A", 0, cpu_sbc_a_a},       // 0x9F
     {"AND A, B", 0, cpu_and_a_b},       // 0xA0
     {"AND A, C", 0, cpu_and_a_c},       // 0xA1
     {"AND A, D", 0, cpu_and_a_d},       // 0xA2
     {"AND A, E", 0, cpu_and_a_e},       // 0xA3
     {"AND A, H", 0, cpu_and_a_h},       // 0xA4
     {"AND A, L", 0, cpu_and_a_l},       // 0xA5
-    {"AND (HL)", 0, nullptr},           // 0xA6
-    {"AND A", 0, nullptr},              // 0xA7
+    {"AND (HL)", 0, cpu_and_a_hl},      // 0xA6
+    {"AND A", 0, cpu_and_a_a},          // 0xA7
     {"XOR A, B", 0, cpu_xor_a_b},       // 0xA8
     {"XOR A, C", 0, cpu_xor_a_c},       // 0xA9
     {"XOR A, D", 0, cpu_xor_a_d},       // 0xAA
     {"XOR A, E", 0, cpu_xor_a_e},       // 0xAB
     {"XOR A, H", 0, cpu_xor_a_h},       // 0xAC
     {"XOR A, L", 0, cpu_xor_a_l},       // 0xAD
-    {"XOR (HL)", 0, nullptr},           // 0xAE
-    {"XOR A", 0, nullptr},              // 0xAF
+    {"XOR (HL)", 0, cpu_xor_a_hl},      // 0xAE
+    {"XOR A", 0, cpu_xor_a_a},          // 0xAF
     {"OR A, B", 0, cpu_or_a_b},         // 0xB0
     {"OR A, C", 0, cpu_or_a_c},         // 0xB1
     {"OR A, D", 0, cpu_or_a_d},         // 0xB2
     {"OR A, E", 0, cpu_or_a_e},         // 0xB3
     {"OR A, H", 0, cpu_or_a_h},         // 0xB4
     {"OR A, L", 0, cpu_or_a_l},         // 0xB5
-    {"OR (HL)", 0, nullptr},            // 0xB6
-    {"OR A", 0, nullptr},               // 0xB7
+    {"OR (HL)", 0, cpu_or_a_hl},        // 0xB6
+    {"OR A", 0, cpu_or_a_a},            // 0xB7
     {"CP B", 0, cpu_cp_a_b},            // 0xB8
     {"CP C", 0, cpu_cp_a_c},            // 0xB9
     {"CP D", 0, cpu_cp_a_d},            // 0xBA
     {"CP E", 0, cpu_cp_a_e},            // 0xBB
     {"CP H", 0, cpu_cp_a_h},            // 0xBC
     {"CP L", 0, cpu_cp_a_l},            // 0xBD
-    {"CP (HL)", 0, nullptr},            // 0xBE
-    {"CP A", 0, nullptr},               // 0xBF
+    {"CP (HL)", 0, cpu_cp_a_hl},        // 0xBE
+    {"CP A", 0, cpu_cp_a_a},            // 0xBF
     {"RET NZ", 0, cpu_ret_nz},          // 0xC0
-    {"POP BC", 0, nullptr},             // 0xC1
+    {"POP BC", 0, cpu_pop_bc},          // 0xC1
     {"JP NZ, nn", 2, cpu_jp_nz},        // 0xC2
     {"JP nn", 2, cpu_jp_nn},            // 0xC3
     {"CALL NZ, nn", 2, cpu_call_nz_nn}, // 0xC4
