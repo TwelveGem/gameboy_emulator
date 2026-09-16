@@ -56,9 +56,9 @@ struct gb_cpu_registers {
 typedef void (*cpu_execute_op)();
 
 extern gb_cpu_registers cpu_registers;
-extern bool cpu_interrupt_master_enable;
 
 void cpu_reset();
+void cpu_tick();
 void cpu_fetch();
 bool cpu_execute();
 

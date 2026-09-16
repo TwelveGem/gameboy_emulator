@@ -2,12 +2,12 @@
 #include "cpu_instructions.h"
 #include "cpu_routines.h"
 #include "emulator_core.h"
+#include "interrupts.h"
 #include "memory_bus.h"
 #include "timer.h"
 #include <stdio.h>
 
 gb_cpu_registers cpu_registers;
-bool cpu_interrupt_master_enable = false;
 uint8_t cpu_current_op_code = 0;
 uint32_t cpu_instruction_counter = 0;
 cpu_execute_op cpu_current_instruction_execute = nullptr;
@@ -21,6 +21,18 @@ void cpu_reset() {
     cpu_registers.hl = 0x014D;
     cpu_registers.sp = 0xFFFE;
     cpu_registers.pc = 0x0100;
+}
+
+void cpu_tick() {
+    if (cpu_halt_count == 0) {
+        cpu_fetch();
+        cpu_execute();
+        cpu_instruction_counter++;
+    } else {
+        core_advance_cpu_clocks(4);
+    }
+
+    interrupt_service_routine();
 }
 
 void cpu_fetch() {
@@ -963,7 +975,7 @@ void cpu_pop_af() {
 
 // 0xF3
 void cpu_di() {
-    cpu_interrupt_master_enable = false;
+    interrupt_master_enable = false;
     core_advance_cpu_clocks(4);
 }
 
