@@ -100,12 +100,12 @@ void cpu_rra();       // 0x1F
 
 // 0x2
 void cpu_jr_nz();     // 0x20
-void cpu_jr_z();      // 0x28
 void cpu_ld_hl_nn();  // 0x21
 void cpu_inc_hl();    // 0x23
 void cpu_inc_h();     // 0x24
 void cpu_dec_h();     // 0x25
 void cpu_ld_h_n();    // 0x26
+void cpu_jr_z();      // 0x28
 void cpu_add_hl_hl(); // 0x29
 void cpu_dec_hl();    // 0x2B
 void cpu_inc_l();     // 0x2C
