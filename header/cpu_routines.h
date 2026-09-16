@@ -246,6 +246,18 @@
         core_advance_cpu_clocks(4);                                                                                    \
     }
 
+// Unconditional RET / RETI is 16 clocks, not the 20 of a taken conditional return
+#define cpu_routine_return()                                                                                           \
+    {                                                                                                                  \
+        core_advance_cpu_clocks(4);                                                                                    \
+        uint32_t temp = memory_bus_read(cpu_registers.sp++);                                                           \
+        core_advance_cpu_clocks(4);                                                                                    \
+        temp |= memory_bus_read(cpu_registers.sp++) << 8;                                                              \
+        core_advance_cpu_clocks(4);                                                                                    \
+        cpu_registers.pc = temp;                                                                                       \
+        core_advance_cpu_clocks(4);                                                                                    \
+    }
+
 #define cpu_routine_jump_conditional_nnnn(cond)                                                                        \
     {                                                                                                                  \
         core_advance_cpu_clocks(4);                                                                                    \

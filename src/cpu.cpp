@@ -139,11 +139,12 @@ void cpu_rrca() {
 // 0x10
 void cpu_stop() {
     core_advance_cpu_clocks(4);
-    if (memory_bus_read(cpu_registers.pc++) != 0) {
+    if (memory_bus_read(cpu_registers.pc) != 0) {
         printf("CPU - Corrupted STOP at PC: %04X, should have operand 0x00\n", cpu_registers.pc);
     }
 
-    core_advance_cpu_clocks(4);
+    // STOP is 4 clocks; the operand byte is skipped without a bus read cycle
+    cpu_registers.pc++;
     timer_on_div_write(0);
     cpu_halt_count = 2;
 }
@@ -172,8 +173,9 @@ void cpu_rla() {
     SET_FLAG_ZERO(0);
     SET_FLAG_SUBTRACT(0);
     SET_FLAG_HALF_CARRY(0);
+    const uint8_t carry = GET_FLAG_CARRY; // Old carry rotates into bit 0
     SET_FLAG_CARRY((cpu_registers.a & 0x80) > 0);
-    cpu_registers.a = (cpu_registers.a << 1) | GET_FLAG_CARRY;
+    cpu_registers.a = (cpu_registers.a << 1) | carry;
 }
 
 // 0x18
@@ -203,8 +205,9 @@ void cpu_rra() {
     SET_FLAG_ZERO(0);
     SET_FLAG_SUBTRACT(0);
     SET_FLAG_HALF_CARRY(0);
+    const uint8_t carry = GET_FLAG_CARRY; // Old carry rotates into bit 7
     SET_FLAG_CARRY(cpu_registers.a & 0x01);
-    cpu_registers.a = cpu_registers.a >> 1 | GET_FLAG_CARRY * 0x80;
+    cpu_registers.a = cpu_registers.a >> 1 | carry * 0x80;
 }
 
 // 0x20
@@ -683,6 +686,7 @@ void cpu_ld_hl_h() { cpu_routine_ld_ptr8(cpu_registers.hl, cpu_registers.h); }
 // 0x75
 void cpu_ld_hl_l() { cpu_routine_ld_ptr8(cpu_registers.hl, cpu_registers.l); }
 
+// 0x76
 void cpu_halt() {
     core_advance_cpu_clocks(4);
     const uint8_t interrupt_enable = memory_bus_read(ADDR_IO_IE);
@@ -977,10 +981,7 @@ void cpu_cp_a_a() { cpu_routine_cp_a_8(cpu_registers.a); }
 void cpu_ret_nz() { cpu_routine_return_conditional(GET_FLAG_ZERO == 0x00); }
 
 // 0xC1
-void cpu_pop_bc() {
-    cpu_routine_pop_16(cpu_registers.b, cpu_registers.c);
-    cpu_registers.f &= 0xF0; // All flags are reset
-}
+void cpu_pop_bc() { cpu_routine_pop_16(cpu_registers.b, cpu_registers.c); }
 
 // 0xC2
 void cpu_jp_nz() { cpu_routine_jump_conditional_nnnn(GET_FLAG_ZERO == 0x00); }
@@ -989,10 +990,8 @@ void cpu_jp_nz() { cpu_routine_jump_conditional_nnnn(GET_FLAG_ZERO == 0x00); }
 void cpu_jp_nn() {
     core_advance_cpu_clocks(4);
     uint32_t temp = memory_bus_read(cpu_registers.pc++);
-    cpu_registers.pc &= 0xFFFF;
     core_advance_cpu_clocks(4);
     temp |= ((uint32_t)memory_bus_read(cpu_registers.pc++)) << 8;
-    cpu_registers.pc &= 0xFFFF;
     core_advance_cpu_clocks(4);
     cpu_registers.pc = temp;
     core_advance_cpu_clocks(4);
@@ -1008,7 +1007,6 @@ void cpu_push_bc() { cpu_routine_push_16(cpu_registers.b, cpu_registers.c); }
 void cpu_add_a_n() {
     core_advance_cpu_clocks(4);
     uint8_t temp = memory_bus_read(cpu_registers.pc++);
-    cpu_registers.pc &= 0xFFFF;
     cpu_routine_add_a_8(temp);
 }
 
@@ -1019,7 +1017,7 @@ void cpu_rst_00() { cpu_routine_rst_nnnn(0x0000); }
 void cpu_ret_z() { cpu_routine_return_conditional(GET_FLAG_ZERO); }
 
 // 0xC9
-void cpu_ret() { cpu_routine_return_conditional(1); }
+void cpu_ret() { cpu_routine_return(); }
 
 // 0xCA
 void cpu_jp_z() { cpu_routine_jump_conditional_nnnn(GET_FLAG_ZERO); }
@@ -1034,7 +1032,6 @@ void cpu_call_nn() { cpu_routine_call_conditional_nnnn(1); }
 void cpu_adc_a_n() {
     core_advance_cpu_clocks(4);
     uint8_t temp = memory_bus_read(cpu_registers.pc++);
-    cpu_registers.pc &= 0xFFFF;
     cpu_routine_adc_a_8(temp);
 }
 
@@ -1045,10 +1042,7 @@ void cpu_rst_08() { cpu_routine_rst_nnnn(0x0008); }
 void cpu_ret_nc() { cpu_routine_return_conditional(GET_FLAG_CARRY == 0x00); }
 
 // 0xD1
-void cpu_pop_de() {
-    cpu_routine_pop_16(cpu_registers.d, cpu_registers.e);
-    cpu_registers.f &= 0xF0; // All flags are reset
-}
+void cpu_pop_de() { cpu_routine_pop_16(cpu_registers.d, cpu_registers.e); }
 
 // 0xD2
 void cpu_jp_nc() { cpu_routine_jump_conditional_nnnn(GET_FLAG_CARRY == 0x00); }
@@ -1063,7 +1057,6 @@ void cpu_push_de() { cpu_routine_push_16(cpu_registers.d, cpu_registers.e); }
 void cpu_sub_a_n() {
     core_advance_cpu_clocks(4);
     uint8_t temp = memory_bus_read(cpu_registers.pc++);
-    cpu_registers.pc &= 0xFFFF;
     cpu_routine_sub_a_8(temp);
 }
 
@@ -1075,7 +1068,7 @@ void cpu_ret_c() { cpu_routine_return_conditional(GET_FLAG_CARRY); }
 
 // 0xD9
 void cpu_reti() {
-    cpu_routine_return_conditional(true);
+    cpu_routine_return();
     interrupt_master_enable = true;
 }
 
@@ -1089,7 +1082,6 @@ void cpu_call_c_nn() { cpu_routine_call_conditional_nnnn(GET_FLAG_CARRY); }
 void cpu_sbc_a_n() {
     core_advance_cpu_clocks(4);
     uint8_t temp = memory_bus_read(cpu_registers.pc++);
-    cpu_registers.pc &= 0xFFFF;
     cpu_routine_sbc_a_8(temp);
 }
 
@@ -1100,17 +1092,13 @@ void cpu_rst_18() { cpu_routine_rst_nnnn(0x0018); }
 void cpu_ldh_n_a() {
     core_advance_cpu_clocks(4);
     uint8_t addr = memory_bus_read(cpu_registers.pc++);
-    cpu_registers.pc &= 0xFFFF;
     core_advance_cpu_clocks(4);
     memory_bus_write(0xFF00 | addr, cpu_registers.a);
     core_advance_cpu_clocks(4);
 }
 
 // 0xE1
-void cpu_pop_hl() {
-    cpu_routine_pop_16(cpu_registers.h, cpu_registers.l);
-    cpu_registers.f &= 0xF0; // All flags are reset
-}
+void cpu_pop_hl() { cpu_routine_pop_16(cpu_registers.h, cpu_registers.l); }
 
 // 0xE2
 void cpu_ldh_c_a() {
@@ -1160,10 +1148,8 @@ void cpu_jp_hl() {
 void cpu_ld_nn_a() {
     core_advance_cpu_clocks(4);
     uint32_t temp = memory_bus_read(cpu_registers.pc++);
-    cpu_registers.pc &= 0xFFFF;
     core_advance_cpu_clocks(4);
     temp |= ((uint32_t)memory_bus_read(cpu_registers.pc++)) << 8;
-    cpu_registers.pc &= 0xFFFF;
     core_advance_cpu_clocks(4);
     memory_bus_write(temp, cpu_registers.a);
     core_advance_cpu_clocks(4);
@@ -1201,9 +1187,7 @@ void cpu_pop_af() {
 // 0xF2
 void cpu_ldh_a_c() {
     core_advance_cpu_clocks(4);
-    uint8_t temp = memory_bus_read(cpu_registers.c);
-    core_advance_cpu_clocks(4);
-    cpu_registers.a = memory_bus_read(temp);
+    cpu_registers.a = memory_bus_read(0xFF00 | cpu_registers.c);
     core_advance_cpu_clocks(4);
 }
 
@@ -1223,25 +1207,22 @@ void cpu_or_a_n() {
     SET_FLAG_SUBTRACT(0);
     SET_FLAG_CARRY(0);
     SET_FLAG_HALF_CARRY(0);
-    uint8_t temp = memory_bus_read(cpu_registers.pc++);
     core_advance_cpu_clocks(4);
-    cpu_registers.a |= temp;
+    cpu_registers.a |= memory_bus_read(cpu_registers.pc++);
     SET_FLAG_ZERO(cpu_registers.a == 0);
-    core_advance_cpu_clocks(4);
 }
 
 // 0xF7
-void cpu_rst_30() { cpu_routine_rst_nnnn(0x0038); }
+void cpu_rst_30() { cpu_routine_rst_nnnn(0x0030); }
 
 // 0xF8
 void cpu_ld_hl_sp_d() {
     core_advance_cpu_clocks(4);
     int8_t temp = (int8_t)memory_bus_read(cpu_registers.pc++);
-    cpu_registers.pc &= 0xFFFF;
     core_advance_cpu_clocks(4);
-    int16_t res = (int16_t)cpu_registers.sp + temp;
+    const uint16_t res = (uint16_t)(cpu_registers.sp + temp);
     core_advance_cpu_clocks(4);
-    cpu_registers.hl = res & 0xFFFF;
+    cpu_registers.hl = res;
     SET_FLAG_ZERO(0);
     SET_FLAG_SUBTRACT(0);
     SET_FLAG_HALF_CARRY(((cpu_registers.sp & 0x000F) + (temp & 0x000F)) > 0x000F);
@@ -1259,10 +1240,8 @@ void cpu_ld_sp_hl() {
 void cpu_ld_a_nn() {
     core_advance_cpu_clocks(4);
     uint16_t temp = memory_bus_read(cpu_registers.pc++);
-    cpu_registers.pc &= 0xFFFF;
     core_advance_cpu_clocks(4);
     temp |= memory_bus_read(cpu_registers.pc++) << 8;
-    cpu_registers.pc &= 0xFFFF;
     core_advance_cpu_clocks(4);
     cpu_registers.a = memory_bus_read(temp);
     core_advance_cpu_clocks(4);

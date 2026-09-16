@@ -33,6 +33,13 @@ void interrupt_jump_to(uint16_t addr) {
 void interrupt_service_routine() {
     const uint8_t interrupt_enable = memory[ADDR_IO_IE];
     const uint8_t interrupt_flag = memory[ADDR_IO_IF];
+
+    // STOP resumes on joypad input alone, independent of IE and IME. Until a joypad
+    // register exists, IF's joypad bit is the only signal available for this.
+    if (cpu_halt_count == 2 && (interrupt_flag & INTERRUPT_FLAG_JOYPAD)) {
+        cpu_halt_count = 0;
+    }
+
     const bool interrupt_pending = ((interrupt_enable & interrupt_flag) & 0x1F) != 0;
 
     if (interrupt_pending) {
