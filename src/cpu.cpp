@@ -3,6 +3,7 @@
 #include "cpu_routines.h"
 #include "emulator_core.h"
 #include "memory_bus.h"
+#include "timer.h"
 #include <stdio.h>
 
 gb_cpu_registers cpu_registers;
@@ -10,6 +11,7 @@ bool cpu_interrupt_master_enable = false;
 uint8_t cpu_current_op_code = 0;
 uint32_t cpu_instruction_counter = 0;
 cpu_execute_op cpu_current_instruction_execute = nullptr;
+uint8_t cpu_halt_count = 0; // 0 == not halted, 1 == halt instruction, 2 == stop instruction
 
 void cpu_reset() {
     // After executing boot rom registers should have these values
@@ -115,6 +117,18 @@ void cpu_rrca() {
     uint8_t carry = cpu_registers.a & 0x01;
     cpu_registers.a = cpu_registers.a >> 1 | carry * 0x80;
     SET_FLAG_CARRY(carry);
+}
+
+// 0x10
+void cpu_stop() {
+    core_advance_cpu_clocks(4);
+    if (memory_bus_read(cpu_registers.pc++) != 0) {
+        printf("CPU - Corrupted STOP at PC: %04X, should have operand 0x00\n", cpu_registers.pc);
+    }
+
+    core_advance_cpu_clocks(4);
+    timer_on_div_write(0);
+    cpu_halt_count = 2;
 }
 
 // 0x11
