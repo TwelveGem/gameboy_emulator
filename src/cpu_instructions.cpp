@@ -200,62 +200,62 @@ const struct gb_cpu_instruction instructions[256] = {
     {"JP nn", 2, cpu_jp_nn},            // 0xC3
     {"CALL NZ, nn", 2, cpu_call_nz_nn}, // 0xC4
     {"PUSH BC", 0, cpu_push_bc},        // 0xC5
-    {"ADD A, n", 1, nullptr},           // 0xC6
+    {"ADD A, n", 1, cpu_add_a_n},       // 0xC6
     {"RST 00H", 0, cpu_rst_00},         // 0xC7
     {"RET Z", 0, cpu_ret_z},            // 0xC8
-    {"RET", 0, nullptr},                // 0xC9
+    {"RET", 0, cpu_ret},                // 0xC9
     {"JP Z, nn", 2, cpu_jp_z},          // 0xCA
     {"PREFIX CB", 1, nullptr},          // 0xCB
     {"CALL Z, nn", 2, cpu_call_z_nn},   // 0xCC
-    {"CALL nn", 2, nullptr},            // 0xCD
-    {"ADC A, n", 1, nullptr},           // 0xCE
+    {"CALL nn", 2, cpu_call_nn},        // 0xCD
+    {"ADC A, n", 1, cpu_adc_a_n},       // 0xCE
     {"RST 08H", 0, cpu_rst_08},         // 0xCF
     {"RET NC", 0, cpu_ret_nc},          // 0xD0
-    {"POP DE", 0, nullptr},             // 0xD1
+    {"POP DE", 0, cpu_pop_de},          // 0xD1
     {"JP NC, nn", 2, cpu_jp_nc},        // 0xD2
     {"??", 0, nullptr},                 // 0xD3
     {"CALL NC, nn", 2, cpu_call_nc_nn}, // 0xD4
     {"PUSH DE", 0, cpu_push_de},        // 0xD5
-    {"SUB n", 1, nullptr},              // 0xD6
+    {"SUB n", 1, cpu_sub_a_n},          // 0xD6
     {"RST 10H", 0, cpu_rst_10},         // 0xD7
     {"RET C", 0, cpu_ret_c},            // 0xD8
-    {"RETI", 0, nullptr},               // 0xD9
+    {"RETI", 0, cpu_reti},              // 0xD9
     {"JP C, nn", 2, cpu_jp_c},          // 0xDA
     {"??", 0, nullptr},                 // 0xDB
     {"CALL C, nn", 2, cpu_call_c_nn},   // 0xDC
     {"??", 0, nullptr},                 // 0xDD
-    {"SBC A, n", 1, nullptr},           // 0xDE
+    {"SBC A, n", 1, cpu_sbc_a_n},       // 0xDE
     {"RST 18H", 0, cpu_rst_18},         // 0xDF
-    {"LDH (n), A", 1, nullptr},         // 0xE0
-    {"POP HL", 0, nullptr},             // 0xE1
-    {"LD (C), A", 0, nullptr},          // 0xE2
+    {"LDH (n), A", 1, cpu_ldh_n_a},     // 0xE0
+    {"POP HL", 0, cpu_pop_hl},          // 0xE1
+    {"LD (C), A", 0, cpu_ldh_c_a},      // 0xE2
     {"??", 0, nullptr},                 // 0xE3
     {"??", 0, nullptr},                 // 0xE4
     {"PUSH HL", 0, cpu_push_hl},        // 0xE5
-    {"AND n", 1, nullptr},              // 0xE6
+    {"AND n", 1, cpu_and_n},            // 0xE6
     {"RST 20H", 0, cpu_rst_20},         // 0xE7
-    {"ADD SP, n", 1, nullptr},          // 0xE8
-    {"JP (HL)", 0, nullptr},            // 0xE9
-    {"LD (nn), A", 2, nullptr},         // 0xEA
+    {"ADD SP, n", 1, cpu_add_sp_d},     // 0xE8
+    {"JP (HL)", 0, cpu_jp_hl},          // 0xE9
+    {"LD (nn), A", 2, cpu_ld_nn_a},     // 0xEA
     {"??", 0, nullptr},                 // 0xEB
     {"??", 0, nullptr},                 // 0xEC
     {"??", 0, nullptr},                 // 0xED
-    {"XOR n", 1, nullptr},              // 0xEE
+    {"XOR n", 1, cpu_xor_a_n},          // 0xEE
     {"RST 28H", 0, cpu_rst_28},         // 0xEF
-    {"LDH A, (n)", 1, nullptr},         // 0xF0
-    {"POP AF", 0, nullptr},             // 0xF1
-    {"LD A, (C)", 0, nullptr},          // 0xF2
+    {"LDH A, (n)", 1, cpu_ldh_a_n},     // 0xF0
+    {"POP AF", 0, cpu_pop_af},          // 0xF1
+    {"LD A, (C)", 0, cpu_ldh_a_c},      // 0xF2
     {"DI", 0, cpu_di},                  // 0xF3
     {"??", 0, nullptr},                 // 0xF4
     {"PUSH AF", 0, cpu_push_af},        // 0xF5
-    {"OR n", 1, nullptr},               // 0xF6
+    {"OR n", 1, cpu_or_a_n},            // 0xF6
     {"RST 30H", 0, cpu_rst_30},         // 0xF7
-    {"LD HL, SP+n", 1, nullptr},        // 0xF8
-    {"LD SP, HL", 0, nullptr},          // 0xF9
-    {"LD A, (nn)", 2, nullptr},         // 0xFA
-    {"EI", 0, nullptr},                 // 0xFB
+    {"LD HL, SP+n", 1, cpu_ld_hl_sp_d}, // 0xF8
+    {"LD SP, HL", 0, cpu_ld_sp_hl},     // 0xF9
+    {"LD A, (nn)", 2, cpu_ld_a_nn},     // 0xFA
+    {"EI", 0, cpu_ei},                  // 0xFB
     {"??", 0, nullptr},                 // 0xFC
     {"??", 0, nullptr},                 // 0xFD
-    {"CP n", 1, nullptr},               // 0xFE
+    {"CP n", 1, cpu_cp_n},              // 0xFE
     {"RST 38H", 0, cpu_rst_38},         // 0xFF
 };
