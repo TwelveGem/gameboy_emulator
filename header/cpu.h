@@ -396,6 +396,23 @@ void cpu_cb_sra_hl(); // 0x2E
 void cpu_cb_sra_a();  // 0x2F
 
 // 0x3
+void cpu_cb_swap_b();  // 0x30
+void cpu_cb_swap_c();  // 0x31
+void cpu_cb_swap_d();  // 0x32
+void cpu_cb_swap_e();  // 0x33
+void cpu_cb_swap_h();  // 0x34
+void cpu_cb_swap_l();  // 0x35
+void cpu_cb_swap_hl(); // 0x36
+void cpu_cb_swap_a();  // 0x37
+void cpu_cb_srl_b();   // 0x38
+void cpu_cb_srl_c();   // 0x39
+void cpu_cb_srl_d();   // 0x3A
+void cpu_cb_srl_e();   // 0x3B
+void cpu_cb_srl_h();   // 0x3C
+void cpu_cb_srl_l();   // 0x3D
+void cpu_cb_srl_hl();  // 0x3E
+void cpu_cb_srl_a();   // 0x3F
+
 // 0x4
 // 0x5
 // 0x6
