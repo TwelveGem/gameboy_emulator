@@ -5,3 +5,4 @@ UseTab: Never
 ColumnLimit: 120
 AlignConsecutiveMacros: true
 InsertNewlineAtEOF: true
+AlignArrayOfStructures: Left
