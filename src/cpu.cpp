@@ -13,6 +13,7 @@ uint32_t cpu_instruction_counter = 0;
 cpu_execute_op cpu_current_instruction_execute = nullptr;
 uint8_t cpu_halt_count = 0; // 0 == not halted, 1 == halt instruction, 2 == stop instruction
 bool cpu_halt_bug = false;
+bool cpu_debug_instructions = true;
 
 void cpu_reset() {
     // After executing boot rom registers should have these values
@@ -37,6 +38,10 @@ void cpu_tick() {
 }
 
 void cpu_fetch() {
+    if (cpu_debug_instructions) {
+        cpu_dump_registers(cpu_registers);
+    }
+
     cpu_current_op_code = memory_bus_read(cpu_registers.pc++);
 
     const bool is_extended_cb_instruction = cpu_current_op_code == 0xCB;
@@ -71,6 +76,57 @@ bool cpu_execute() {
 
     return true;
 }
+
+void cpu_dump_registers(const gb_cpu_registers &registers) {
+    const uint8_t op_code = memory_bus_read(registers.pc);
+    const gb_cpu_instruction &instruction = instructions[op_code];
+    const uint8_t pchi = (registers.pc & 0xFF00) >> 8;
+    const uint8_t pclo = registers.pc & 0xFF;
+    const uint8_t sphi = (registers.sp & 0xFF00) >> 8;
+    const uint8_t splo = registers.sp & 0xFF;
+
+    switch (instruction.operand_length) {
+    case 0:
+        printf("AF: %.2X%.2X  BC: %.2X%.2X  DE: %.2X%.2X  HL: %.2X%.2X  SP: %.2X%.2X  PC: %.2X%.2X %s\n", registers.a,
+               registers.f, registers.b, registers.c, registers.d, registers.e, registers.h, registers.l, sphi, splo,
+               pchi, pclo, instruction.disassembly);
+        break;
+    case 1: {
+        const uint8_t operand = memory_bus_read(registers.pc + 1);
+        printf("AF: %.2X%.2X  BC: %.2X%.2X  DE: %.2X%.2X  HL: %.2X%.2X  SP: %.2X%.2X  PC: %.2X%.2X %s (%.2X)\n",
+               registers.a, registers.f, registers.b, registers.c, registers.d, registers.e, registers.h, registers.l,
+               sphi, splo, pchi, pclo, instruction.disassembly, operand);
+    } break;
+    case 2: {
+        const uint8_t oplo = memory_bus_read(registers.pc + 1);
+        const uint8_t ophi = memory_bus_read(registers.pc + 2);
+        printf("AF: %.2X%.2X  BC: %.2X%.2X  DE: %.2X%.2X  HL: %.2X%.2X  SP: %.2X%.2X  PC: %.2X%.2X %s (%.2X%.2X)\n",
+               registers.a, registers.f, registers.b, registers.c, registers.d, registers.e, registers.h, registers.l,
+               sphi, splo, pchi, pclo, instruction.disassembly, ophi, oplo);
+    } break;
+    default:
+        break;
+    }
+
+    if (instruction.operand_length == 0) {
+        printf("AF: %.2X%.2X  BC: %.2X%.2X  DE: %.2X%.2X  HL: %.2X%.2X  SP: %.2X%.2X  PC: %.2X%.2X %s\n", registers.a,
+               registers.f, registers.b, registers.c, registers.d, registers.e, registers.h, registers.l, sphi, splo,
+               pchi, pclo, instruction.disassembly);
+    } else if (instruction.operand_length == 1) {
+        const uint8_t operand = memory_bus_read(registers.pc + 1);
+        printf("AF: %.2X%.2X  BC: %.2X%.2X  DE: %.2X%.2X  HL: %.2X%.2X  SP: %.2X%.2X  PC: %.2X%.2X %s (%.2X)\n",
+               registers.a, registers.f, registers.b, registers.c, registers.d, registers.e, registers.h, registers.l,
+               sphi, splo, pchi, pclo, instruction.disassembly, operand);
+    } else if (instruction.operand_length == 2) {
+        const uint8_t oplo = memory_bus_read(registers.pc + 1);
+        const uint8_t ophi = memory_bus_read(registers.pc + 2);
+        printf("AF: %.2X%.2X  BC: %.2X%.2X  DE: %.2X%.2X  HL: %.2X%.2X  SP: %.2X%.2X  PC: %.2X%.2X %s (%.2X%.2X)\n",
+               registers.a, registers.f, registers.b, registers.c, registers.d, registers.e, registers.h, registers.l,
+               sphi, splo, pchi, pclo, instruction.disassembly, ophi, oplo);
+    }
+}
+
+// Instructions
 
 // 0x00
 void cpu_noop() { core_advance_cpu_clocks(4); }
