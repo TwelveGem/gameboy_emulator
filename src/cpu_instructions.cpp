@@ -293,22 +293,22 @@ const struct gb_cpu_pre_cb_instruction cb_instructions[256] = {
     {"RR L", cpu_cb_rr_l},       // 0x1D
     {"RR (HL)", cpu_cb_rr_hl},   // 0x1E
     {"RR A", cpu_cb_rr_a},       // 0x1F
-    {"SLA B", nullptr},          // 0x20
-    {"SLA C", nullptr},          // 0x21
-    {"SLA D", nullptr},          // 0x22
-    {"SLA E", nullptr},          // 0x23
-    {"SLA H", nullptr},          // 0x24
-    {"SLA L", nullptr},          // 0x25
-    {"SLA (HL)", nullptr},       // 0x26
-    {"SLA A", nullptr},          // 0x27
-    {"SRA B", nullptr},          // 0x28
-    {"SRA C", nullptr},          // 0x29
-    {"SRA D", nullptr},          // 0x2A
-    {"SRA E", nullptr},          // 0x2B
-    {"SRA H", nullptr},          // 0x2C
-    {"SRA L", nullptr},          // 0x2D
-    {"SRA (HL)", nullptr},       // 0x2E
-    {"SRA A", nullptr},          // 0x2F
+    {"SLA B", cpu_cb_sla_b},     // 0x20
+    {"SLA C", cpu_cb_sla_c},     // 0x21
+    {"SLA D", cpu_cb_sla_d},     // 0x22
+    {"SLA E", cpu_cb_sla_e},     // 0x23
+    {"SLA H", cpu_cb_sla_h},     // 0x24
+    {"SLA L", cpu_cb_sla_l},     // 0x25
+    {"SLA (HL)", cpu_cb_sla_hl}, // 0x26
+    {"SLA A", cpu_cb_sla_a},     // 0x27
+    {"SRA B", cpu_cb_sra_b},     // 0x28
+    {"SRA C", cpu_cb_sra_c},     // 0x29
+    {"SRA D", cpu_cb_sra_d},     // 0x2A
+    {"SRA E", cpu_cb_sra_e},     // 0x2B
+    {"SRA H", cpu_cb_sra_h},     // 0x2C
+    {"SRA L", cpu_cb_sra_l},     // 0x2D
+    {"SRA (HL)", cpu_cb_sra_hl}, // 0x2E
+    {"SRA A", cpu_cb_sra_a},     // 0x2F
     {"SWAP B", nullptr},         // 0x30
     {"SWAP C", nullptr},         // 0x31
     {"SWAP D", nullptr},         // 0x32
