@@ -277,22 +277,22 @@ const struct gb_cpu_pre_cb_instruction cb_instructions[256] = {
     {"RRC L", cpu_cb_rrc_l},     // 0x0D
     {"RRC (HL)", cpu_cb_rrc_hl}, // 0x0E
     {"RRC A", cpu_cb_rrc_a},     // 0x0F
-    {"RL B", nullptr},           // 0x10
-    {"RL C", nullptr},           // 0x11
-    {"RL D", nullptr},           // 0x12
-    {"RL E", nullptr},           // 0x13
-    {"RL H", nullptr},           // 0x14
-    {"RL L", nullptr},           // 0x15
-    {"RL (HL)", nullptr},        // 0x16
-    {"RL A", nullptr},           // 0x17
-    {"RR B", nullptr},           // 0x18
-    {"RR C", nullptr},           // 0x19
-    {"RR D", nullptr},           // 0x1A
-    {"RR E", nullptr},           // 0x1B
-    {"RR H", nullptr},           // 0x1C
-    {"RR L", nullptr},           // 0x1D
-    {"RR (HL)", nullptr},        // 0x1E
-    {"RR A", nullptr},           // 0x1F
+    {"RL B", cpu_cb_rl_b},       // 0x10
+    {"RL C", cpu_cb_rl_c},       // 0x11
+    {"RL D", cpu_cb_rl_d},       // 0x12
+    {"RL E", cpu_cb_rl_e},       // 0x13
+    {"RL H", cpu_cb_rl_h},       // 0x14
+    {"RL L", cpu_cb_rl_l},       // 0x15
+    {"RL (HL)", cpu_cb_rl_hl},   // 0x16
+    {"RL A", cpu_cb_rl_a},       // 0x17
+    {"RR B", cpu_cb_rr_b},       // 0x18
+    {"RR C", cpu_cb_rr_c},       // 0x19
+    {"RR D", cpu_cb_rr_d},       // 0x1A
+    {"RR E", cpu_cb_rr_e},       // 0x1B
+    {"RR H", cpu_cb_rr_h},       // 0x1C
+    {"RR L", cpu_cb_rr_l},       // 0x1D
+    {"RR (HL)", cpu_cb_rr_hl},   // 0x1E
+    {"RR A", cpu_cb_rr_a},       // 0x1F
     {"SLA B", nullptr},          // 0x20
     {"SLA C", nullptr},          // 0x21
     {"SLA D", nullptr},          // 0x22

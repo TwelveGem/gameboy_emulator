@@ -360,6 +360,23 @@ void cpu_cb_rrc_hl(); // 0x0E
 void cpu_cb_rrc_a();  // 0x0F
 
 // 0x1
+void cpu_cb_rl_b();  // 0x10
+void cpu_cb_rl_c();  // 0x11
+void cpu_cb_rl_d();  // 0x12
+void cpu_cb_rl_e();  // 0x13
+void cpu_cb_rl_h();  // 0x14
+void cpu_cb_rl_l();  // 0x15
+void cpu_cb_rl_hl(); // 0x16
+void cpu_cb_rl_a();  // 0x17
+void cpu_cb_rr_b();  // 0x18
+void cpu_cb_rr_c();  // 0x19
+void cpu_cb_rr_d();  // 0x1A
+void cpu_cb_rr_e();  // 0x1B
+void cpu_cb_rr_h();  // 0x1C
+void cpu_cb_rr_l();  // 0x1D
+void cpu_cb_rr_hl(); // 0x1E
+void cpu_cb_rr_a();  // 0x1F
+
 // 0x2
 // 0x3
 // 0x4

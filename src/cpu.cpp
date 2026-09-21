@@ -1305,7 +1305,6 @@ void cpu_cb_rlc_hl() {
     temp = (temp << 1) | GET_FLAG_CARRY;
     SET_FLAG_ZERO(temp == 0);
 
-    core_advance_cpu_clocks(4);
     memory_bus_write(cpu_registers.hl, temp);
     core_advance_cpu_clocks(4);
 }
@@ -1343,10 +1342,85 @@ void cpu_cb_rrc_hl() {
     temp = (temp >> 1) | GET_FLAG_CARRY * 0x80;
     SET_FLAG_ZERO(temp == 0);
 
-    core_advance_cpu_clocks(4);
     memory_bus_write(cpu_registers.hl, temp);
     core_advance_cpu_clocks(4);
 }
 
 // 0x0F
 void cpu_cb_rrc_a() { cpu_routine_rrc_8(cpu_registers.a); }
+
+// 0x10
+void cpu_cb_rl_b() { cpu_routine_rl_8(cpu_registers.b); }
+
+// 0x11
+void cpu_cb_rl_c() { cpu_routine_rl_8(cpu_registers.c); }
+
+// 0x12
+void cpu_cb_rl_d() { cpu_routine_rl_8(cpu_registers.d); }
+
+// 0x13
+void cpu_cb_rl_e() { cpu_routine_rl_8(cpu_registers.e); }
+
+// 0x14
+void cpu_cb_rl_h() { cpu_routine_rl_8(cpu_registers.h); }
+
+// 0x15
+void cpu_cb_rl_l() { cpu_routine_rl_8(cpu_registers.l); }
+
+// 0x16
+void cpu_cb_rl_hl() {
+    core_advance_cpu_clocks(4);
+    uint8_t temp = memory_bus_read(cpu_registers.hl);
+    core_advance_cpu_clocks(4);
+
+    SET_FLAG_SUBTRACT(0);
+    SET_FLAG_HALF_CARRY(0);
+    bool carry = GET_FLAG_CARRY;
+    SET_FLAG_CARRY((temp & 0x80) != 0);
+    temp = (temp << 1) | carry;
+    SET_FLAG_ZERO(temp == 0);
+
+    memory_bus_write(cpu_registers.hl, temp);
+    core_advance_cpu_clocks(4);
+}
+
+// 0x17
+void cpu_cb_rl_a() { cpu_routine_rl_8(cpu_registers.a); }
+
+// 0x18
+void cpu_cb_rr_b() { cpu_routine_rr_8(cpu_registers.b); }
+
+// 0x19
+void cpu_cb_rr_c() { cpu_routine_rr_8(cpu_registers.c); }
+
+// 0x1A
+void cpu_cb_rr_d() { cpu_routine_rr_8(cpu_registers.d); }
+
+// 0x1B
+void cpu_cb_rr_e() { cpu_routine_rr_8(cpu_registers.e); }
+
+// 0x1C
+void cpu_cb_rr_h() { cpu_routine_rr_8(cpu_registers.h); }
+
+// 0x1D
+void cpu_cb_rr_l() { cpu_routine_rr_8(cpu_registers.l); }
+
+// 0x1E
+void cpu_cb_rr_hl() {
+    core_advance_cpu_clocks(4);
+    uint8_t temp = memory_bus_read(cpu_registers.hl);
+    core_advance_cpu_clocks(4);
+
+    SET_FLAG_SUBTRACT(0);
+    SET_FLAG_HALF_CARRY(0);
+    bool carry = GET_FLAG_CARRY;
+    SET_FLAG_CARRY((temp & 0x01) != 0);
+    temp = (temp >> 1) | carry * 0x80;
+    SET_FLAG_ZERO(temp == 0);
+
+    memory_bus_write(cpu_registers.hl, temp);
+    core_advance_cpu_clocks(4);
+}
+
+// 0x1F
+void cpu_cb_rr_a() { cpu_routine_rr_8(cpu_registers.a); }
