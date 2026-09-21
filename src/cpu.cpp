@@ -38,12 +38,22 @@ void cpu_tick() {
 
 void cpu_fetch() {
     cpu_current_op_code = memory_bus_read(cpu_registers.pc++);
-    const gb_cpu_instruction &instruction = instructions[cpu_current_op_code];
-    cpu_current_instruction_execute = instruction.execute;
+
+    const bool is_extended_cb_instruction = cpu_current_op_code == 0xCB;
 
     if (cpu_halt_bug) {
         cpu_registers.pc--; // Repeat one byte during halt bug
         cpu_halt_bug = false;
+    }
+
+    if (is_extended_cb_instruction) {
+        core_advance_cpu_clocks(4);
+        const uint8_t cpu_current_op_code_cb = memory_bus_read(cpu_registers.pc++);
+        const gb_cpu_pre_cb_instruction &cb_instruction = cb_instructions[cpu_current_op_code_cb];
+        cpu_current_instruction_execute = cb_instruction.execute;
+    } else {
+        const gb_cpu_instruction &instruction = instructions[cpu_current_op_code];
+        cpu_current_instruction_execute = instruction.execute;
     }
 }
 

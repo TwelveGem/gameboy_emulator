@@ -9,4 +9,10 @@ struct gb_cpu_instruction {
     cpu_execute_op execute;
 };
 
+struct gb_cpu_pre_cb_instruction {
+    const char *disassembly;
+    cpu_execute_op execute;
+};
+
 extern const gb_cpu_instruction instructions[256];
+extern const gb_cpu_pre_cb_instruction cb_instructions[256];
