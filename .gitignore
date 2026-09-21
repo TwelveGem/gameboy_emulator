@@ -32,3 +32,6 @@ _deps/
 
 # example games
 games/
+
+# Logfile
+logfile.txt
