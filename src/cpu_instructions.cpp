@@ -261,260 +261,260 @@ const struct gb_cpu_instruction instructions[256] = {
 };
 
 const struct gb_cpu_pre_cb_instruction cb_instructions[256] = {
-    {"RLC B", cpu_cb_rlc_b},       // 0x00
-    {"RLC C", cpu_cb_rlc_c},       // 0x01
-    {"RLC D", cpu_cb_rlc_d},       // 0x02
-    {"RLC E", cpu_cb_rlc_e},       // 0x03
-    {"RLC H", cpu_cb_rlc_h},       // 0x04
-    {"RLC L", cpu_cb_rlc_l},       // 0x05
-    {"RLC (HL)", cpu_cb_rlc_hl},   // 0x06
-    {"RLC A", cpu_cb_rlc_a},       // 0x07
-    {"RRC B", cpu_cb_rrc_b},       // 0x08
-    {"RRC C", cpu_cb_rrc_c},       // 0x09
-    {"RRC D", cpu_cb_rrc_d},       // 0x0A
-    {"RRC E", cpu_cb_rrc_e},       // 0x0B
-    {"RRC H", cpu_cb_rrc_h},       // 0x0C
-    {"RRC L", cpu_cb_rrc_l},       // 0x0D
-    {"RRC (HL)", cpu_cb_rrc_hl},   // 0x0E
-    {"RRC A", cpu_cb_rrc_a},       // 0x0F
-    {"RL B", cpu_cb_rl_b},         // 0x10
-    {"RL C", cpu_cb_rl_c},         // 0x11
-    {"RL D", cpu_cb_rl_d},         // 0x12
-    {"RL E", cpu_cb_rl_e},         // 0x13
-    {"RL H", cpu_cb_rl_h},         // 0x14
-    {"RL L", cpu_cb_rl_l},         // 0x15
-    {"RL (HL)", cpu_cb_rl_hl},     // 0x16
-    {"RL A", cpu_cb_rl_a},         // 0x17
-    {"RR B", cpu_cb_rr_b},         // 0x18
-    {"RR C", cpu_cb_rr_c},         // 0x19
-    {"RR D", cpu_cb_rr_d},         // 0x1A
-    {"RR E", cpu_cb_rr_e},         // 0x1B
-    {"RR H", cpu_cb_rr_h},         // 0x1C
-    {"RR L", cpu_cb_rr_l},         // 0x1D
-    {"RR (HL)", cpu_cb_rr_hl},     // 0x1E
-    {"RR A", cpu_cb_rr_a},         // 0x1F
-    {"SLA B", cpu_cb_sla_b},       // 0x20
-    {"SLA C", cpu_cb_sla_c},       // 0x21
-    {"SLA D", cpu_cb_sla_d},       // 0x22
-    {"SLA E", cpu_cb_sla_e},       // 0x23
-    {"SLA H", cpu_cb_sla_h},       // 0x24
-    {"SLA L", cpu_cb_sla_l},       // 0x25
-    {"SLA (HL)", cpu_cb_sla_hl},   // 0x26
-    {"SLA A", cpu_cb_sla_a},       // 0x27
-    {"SRA B", cpu_cb_sra_b},       // 0x28
-    {"SRA C", cpu_cb_sra_c},       // 0x29
-    {"SRA D", cpu_cb_sra_d},       // 0x2A
-    {"SRA E", cpu_cb_sra_e},       // 0x2B
-    {"SRA H", cpu_cb_sra_h},       // 0x2C
-    {"SRA L", cpu_cb_sra_l},       // 0x2D
-    {"SRA (HL)", cpu_cb_sra_hl},   // 0x2E
-    {"SRA A", cpu_cb_sra_a},       // 0x2F
-    {"SWAP B", cpu_cb_swap_b},     // 0x30
-    {"SWAP C", cpu_cb_swap_c},     // 0x31
-    {"SWAP D", cpu_cb_swap_d},     // 0x32
-    {"SWAP E", cpu_cb_swap_e},     // 0x33
-    {"SWAP H", cpu_cb_swap_h},     // 0x34
-    {"SWAP L", cpu_cb_swap_l},     // 0x35
-    {"SWAP (HL)", cpu_cb_swap_hl}, // 0x36
-    {"SWAP A", cpu_cb_swap_a},     // 0x37
-    {"SRL B", cpu_cb_srl_b},       // 0x38
-    {"SRL C", cpu_cb_srl_c},       // 0x39
-    {"SRL D", cpu_cb_srl_d},       // 0x3A
-    {"SRL E", cpu_cb_srl_e},       // 0x3B
-    {"SRL H", cpu_cb_srl_h},       // 0x3C
-    {"SRL L", cpu_cb_srl_l},       // 0x3D
-    {"SRL (HL)", cpu_cb_srl_hl},   // 0x3E
-    {"SRL A", cpu_cb_srl_a},       // 0x3F
-    {"BIT 0, B", nullptr},         // 0x40
-    {"BIT 0, C", nullptr},         // 0x41
-    {"BIT 0, D", nullptr},         // 0x42
-    {"BIT 0, E", nullptr},         // 0x43
-    {"BIT 0, H", nullptr},         // 0x44
-    {"BIT 0, L", nullptr},         // 0x45
-    {"BIT 0, (HL)", nullptr},      // 0x46
-    {"BIT 0, A", nullptr},         // 0x47
-    {"BIT 1, B", nullptr},         // 0x48
-    {"BIT 1, C", nullptr},         // 0x49
-    {"BIT 1, D", nullptr},         // 0x4A
-    {"BIT 1, E", nullptr},         // 0x4B
-    {"BIT 1, H", nullptr},         // 0x4C
-    {"BIT 1, L", nullptr},         // 0x4D
-    {"BIT 1, (HL)", nullptr},      // 0x4E
-    {"BIT 1, A", nullptr},         // 0x4F
-    {"BIT 2, B", nullptr},         // 0x50
-    {"BIT 2, C", nullptr},         // 0x51
-    {"BIT 2, D", nullptr},         // 0x52
-    {"BIT 2, E", nullptr},         // 0x53
-    {"BIT 2, H", nullptr},         // 0x54
-    {"BIT 2, L", nullptr},         // 0x55
-    {"BIT 2, (HL)", nullptr},      // 0x56
-    {"BIT 2, A", nullptr},         // 0x57
-    {"BIT 3, B", nullptr},         // 0x58
-    {"BIT 3, C", nullptr},         // 0x59
-    {"BIT 3, D", nullptr},         // 0x5A
-    {"BIT 3, E", nullptr},         // 0x5B
-    {"BIT 3, H", nullptr},         // 0x5C
-    {"BIT 3, L", nullptr},         // 0x5D
-    {"BIT 3, (HL)", nullptr},      // 0x5E
-    {"BIT 3, A", nullptr},         // 0x5F
-    {"BIT 4, B", nullptr},         // 0x60
-    {"BIT 4, C", nullptr},         // 0x61
-    {"BIT 4, D", nullptr},         // 0x62
-    {"BIT 4, E", nullptr},         // 0x63
-    {"BIT 4, H", nullptr},         // 0x64
-    {"BIT 4, L", nullptr},         // 0x65
-    {"BIT 4, (HL)", nullptr},      // 0x66
-    {"BIT 4, A", nullptr},         // 0x67
-    {"BIT 5, B", nullptr},         // 0x68
-    {"BIT 5, C", nullptr},         // 0x69
-    {"BIT 5, D", nullptr},         // 0x6A
-    {"BIT 5, E", nullptr},         // 0x6B
-    {"BIT 5, H", nullptr},         // 0x6C
-    {"BIT 5, L", nullptr},         // 0x6D
-    {"BIT 5, (HL)", nullptr},      // 0x6E
-    {"BIT 5, A", nullptr},         // 0x6F
-    {"BIT 6, B", nullptr},         // 0x70
-    {"BIT 6, C", nullptr},         // 0x71
-    {"BIT 6, D", nullptr},         // 0x72
-    {"BIT 6, E", nullptr},         // 0x73
-    {"BIT 6, H", nullptr},         // 0x74
-    {"BIT 6, L", nullptr},         // 0x75
-    {"BIT 6, (HL)", nullptr},      // 0x76
-    {"BIT 6, A", nullptr},         // 0x77
-    {"BIT 7, B", nullptr},         // 0x78
-    {"BIT 7, C", nullptr},         // 0x79
-    {"BIT 7, D", nullptr},         // 0x7A
-    {"BIT 7, E", nullptr},         // 0x7B
-    {"BIT 7, H", nullptr},         // 0x7C
-    {"BIT 7, L", nullptr},         // 0x7D
-    {"BIT 7, (HL)", nullptr},      // 0x7E
-    {"BIT 7, A", nullptr},         // 0x7F
-    {"RES 0, B", nullptr},         // 0x80
-    {"RES 0, C", nullptr},         // 0x81
-    {"RES 0, D", nullptr},         // 0x82
-    {"RES 0, E", nullptr},         // 0x83
-    {"RES 0, H", nullptr},         // 0x84
-    {"RES 0, L", nullptr},         // 0x85
-    {"RES 0, (HL)", nullptr},      // 0x86
-    {"RES 0, A", nullptr},         // 0x87
-    {"RES 1, B", nullptr},         // 0x88
-    {"RES 1, C", nullptr},         // 0x89
-    {"RES 1, D", nullptr},         // 0x8A
-    {"RES 1, E", nullptr},         // 0x8B
-    {"RES 1, H", nullptr},         // 0x8C
-    {"RES 1, L", nullptr},         // 0x8D
-    {"RES 1, (HL)", nullptr},      // 0x8E
-    {"RES 1, A", nullptr},         // 0x8F
-    {"RES 2, B", nullptr},         // 0x90
-    {"RES 2, C", nullptr},         // 0x91
-    {"RES 2, D", nullptr},         // 0x92
-    {"RES 2, E", nullptr},         // 0x93
-    {"RES 2, H", nullptr},         // 0x94
-    {"RES 2, L", nullptr},         // 0x95
-    {"RES 2, (HL)", nullptr},      // 0x96
-    {"RES 2, A", nullptr},         // 0x97
-    {"RES 3, B", nullptr},         // 0x98
-    {"RES 3, C", nullptr},         // 0x99
-    {"RES 3, D", nullptr},         // 0x9A
-    {"RES 3, E", nullptr},         // 0x9B
-    {"RES 3, H", nullptr},         // 0x9C
-    {"RES 3, L", nullptr},         // 0x9D
-    {"RES 3, (HL)", nullptr},      // 0x9E
-    {"RES 3, A", nullptr},         // 0x9F
-    {"RES 4, B", nullptr},         // 0xA0
-    {"RES 4, C", nullptr},         // 0xA1
-    {"RES 4, D", nullptr},         // 0xA2
-    {"RES 4, E", nullptr},         // 0xA3
-    {"RES 4, H", nullptr},         // 0xA4
-    {"RES 4, L", nullptr},         // 0xA5
-    {"RES 4, (HL)", nullptr},      // 0xA6
-    {"RES 4, A", nullptr},         // 0xA7
-    {"RES 5, B", nullptr},         // 0xA8
-    {"RES 5, C", nullptr},         // 0xA9
-    {"RES 5, D", nullptr},         // 0xAA
-    {"RES 5, E", nullptr},         // 0xAB
-    {"RES 5, H", nullptr},         // 0xAC
-    {"RES 5, L", nullptr},         // 0xAD
-    {"RES 5, (HL)", nullptr},      // 0xAE
-    {"RES 5, A", nullptr},         // 0xAF
-    {"RES 6, B", nullptr},         // 0xB0
-    {"RES 6, C", nullptr},         // 0xB1
-    {"RES 6, D", nullptr},         // 0xB2
-    {"RES 6, E", nullptr},         // 0xB3
-    {"RES 6, H", nullptr},         // 0xB4
-    {"RES 6, L", nullptr},         // 0xB5
-    {"RES 6, (HL)", nullptr},      // 0xB6
-    {"RES 6, A", nullptr},         // 0xB7
-    {"RES 7, B", nullptr},         // 0xB8
-    {"RES 7, C", nullptr},         // 0xB9
-    {"RES 7, D", nullptr},         // 0xBA
-    {"RES 7, E", nullptr},         // 0xBB
-    {"RES 7, H", nullptr},         // 0xBC
-    {"RES 7, L", nullptr},         // 0xBD
-    {"RES 7, (HL)", nullptr},      // 0xBE
-    {"RES 7, A", nullptr},         // 0xBF
-    {"SET 0, B", nullptr},         // 0xC0
-    {"SET 0, C", nullptr},         // 0xC1
-    {"SET 0, D", nullptr},         // 0xC2
-    {"SET 0, E", nullptr},         // 0xC3
-    {"SET 0, H", nullptr},         // 0xC4
-    {"SET 0, L", nullptr},         // 0xC5
-    {"SET 0, (HL)", nullptr},      // 0xC6
-    {"SET 0, A", nullptr},         // 0xC7
-    {"SET 1, B", nullptr},         // 0xC8
-    {"SET 1, C", nullptr},         // 0xC9
-    {"SET 1, D", nullptr},         // 0xCA
-    {"SET 1, E", nullptr},         // 0xCB
-    {"SET 1, H", nullptr},         // 0xCC
-    {"SET 1, L", nullptr},         // 0xCD
-    {"SET 1, (HL)", nullptr},      // 0xCE
-    {"SET 1, A", nullptr},         // 0xCF
-    {"SET 2, B", nullptr},         // 0xD0
-    {"SET 2, C", nullptr},         // 0xD1
-    {"SET 2, D", nullptr},         // 0xD2
-    {"SET 2, E", nullptr},         // 0xD3
-    {"SET 2, H", nullptr},         // 0xD4
-    {"SET 2, L", nullptr},         // 0xD5
-    {"SET 2, (HL)", nullptr},      // 0xD6
-    {"SET 2, A", nullptr},         // 0xD7
-    {"SET 3, B", nullptr},         // 0xD8
-    {"SET 3, C", nullptr},         // 0xD9
-    {"SET 3, D", nullptr},         // 0xDA
-    {"SET 3, E", nullptr},         // 0xDB
-    {"SET 3, H", nullptr},         // 0xDC
-    {"SET 3, L", nullptr},         // 0xDD
-    {"SET 3, (HL)", nullptr},      // 0xDE
-    {"SET 3, A", nullptr},         // 0xDF
-    {"SET 4, B", nullptr},         // 0xE0
-    {"SET 4, C", nullptr},         // 0xE1
-    {"SET 4, D", nullptr},         // 0xE2
-    {"SET 4, E", nullptr},         // 0xE3
-    {"SET 4, H", nullptr},         // 0xE4
-    {"SET 4, L", nullptr},         // 0xE5
-    {"SET 4, (HL)", nullptr},      // 0xE6
-    {"SET 4, A", nullptr},         // 0xE7
-    {"SET 5, B", nullptr},         // 0xE8
-    {"SET 5, C", nullptr},         // 0xE9
-    {"SET 5, D", nullptr},         // 0xEA
-    {"SET 5, E", nullptr},         // 0xEB
-    {"SET 5, H", nullptr},         // 0xEC
-    {"SET 5, L", nullptr},         // 0xED
-    {"SET 5, (HL)", nullptr},      // 0xEE
-    {"SET 5, A", nullptr},         // 0xEF
-    {"SET 6, B", nullptr},         // 0xF0
-    {"SET 6, C", nullptr},         // 0xF1
-    {"SET 6, D", nullptr},         // 0xF2
-    {"SET 6, E", nullptr},         // 0xF3
-    {"SET 6, H", nullptr},         // 0xF4
-    {"SET 6, L", nullptr},         // 0xF5
-    {"SET 6, (HL)", nullptr},      // 0xF6
-    {"SET 6, A", nullptr},         // 0xF7
-    {"SET 7, B", nullptr},         // 0xF8
-    {"SET 7, C", nullptr},         // 0xF9
-    {"SET 7, D", nullptr},         // 0xFA
-    {"SET 7, E", nullptr},         // 0xFB
-    {"SET 7, H", nullptr},         // 0xFC
-    {"SET 7, L", nullptr},         // 0xFD
-    {"SET 7, (HL)", nullptr},      // 0xFE
-    {"SET 7, A", nullptr},         // 0xFF
+    {"RLC B", cpu_cb_rlc_b},          // 0x00
+    {"RLC C", cpu_cb_rlc_c},          // 0x01
+    {"RLC D", cpu_cb_rlc_d},          // 0x02
+    {"RLC E", cpu_cb_rlc_e},          // 0x03
+    {"RLC H", cpu_cb_rlc_h},          // 0x04
+    {"RLC L", cpu_cb_rlc_l},          // 0x05
+    {"RLC (HL)", cpu_cb_rlc_hl},      // 0x06
+    {"RLC A", cpu_cb_rlc_a},          // 0x07
+    {"RRC B", cpu_cb_rrc_b},          // 0x08
+    {"RRC C", cpu_cb_rrc_c},          // 0x09
+    {"RRC D", cpu_cb_rrc_d},          // 0x0A
+    {"RRC E", cpu_cb_rrc_e},          // 0x0B
+    {"RRC H", cpu_cb_rrc_h},          // 0x0C
+    {"RRC L", cpu_cb_rrc_l},          // 0x0D
+    {"RRC (HL)", cpu_cb_rrc_hl},      // 0x0E
+    {"RRC A", cpu_cb_rrc_a},          // 0x0F
+    {"RL B", cpu_cb_rl_b},            // 0x10
+    {"RL C", cpu_cb_rl_c},            // 0x11
+    {"RL D", cpu_cb_rl_d},            // 0x12
+    {"RL E", cpu_cb_rl_e},            // 0x13
+    {"RL H", cpu_cb_rl_h},            // 0x14
+    {"RL L", cpu_cb_rl_l},            // 0x15
+    {"RL (HL)", cpu_cb_rl_hl},        // 0x16
+    {"RL A", cpu_cb_rl_a},            // 0x17
+    {"RR B", cpu_cb_rr_b},            // 0x18
+    {"RR C", cpu_cb_rr_c},            // 0x19
+    {"RR D", cpu_cb_rr_d},            // 0x1A
+    {"RR E", cpu_cb_rr_e},            // 0x1B
+    {"RR H", cpu_cb_rr_h},            // 0x1C
+    {"RR L", cpu_cb_rr_l},            // 0x1D
+    {"RR (HL)", cpu_cb_rr_hl},        // 0x1E
+    {"RR A", cpu_cb_rr_a},            // 0x1F
+    {"SLA B", cpu_cb_sla_b},          // 0x20
+    {"SLA C", cpu_cb_sla_c},          // 0x21
+    {"SLA D", cpu_cb_sla_d},          // 0x22
+    {"SLA E", cpu_cb_sla_e},          // 0x23
+    {"SLA H", cpu_cb_sla_h},          // 0x24
+    {"SLA L", cpu_cb_sla_l},          // 0x25
+    {"SLA (HL)", cpu_cb_sla_hl},      // 0x26
+    {"SLA A", cpu_cb_sla_a},          // 0x27
+    {"SRA B", cpu_cb_sra_b},          // 0x28
+    {"SRA C", cpu_cb_sra_c},          // 0x29
+    {"SRA D", cpu_cb_sra_d},          // 0x2A
+    {"SRA E", cpu_cb_sra_e},          // 0x2B
+    {"SRA H", cpu_cb_sra_h},          // 0x2C
+    {"SRA L", cpu_cb_sra_l},          // 0x2D
+    {"SRA (HL)", cpu_cb_sra_hl},      // 0x2E
+    {"SRA A", cpu_cb_sra_a},          // 0x2F
+    {"SWAP B", cpu_cb_swap_b},        // 0x30
+    {"SWAP C", cpu_cb_swap_c},        // 0x31
+    {"SWAP D", cpu_cb_swap_d},        // 0x32
+    {"SWAP E", cpu_cb_swap_e},        // 0x33
+    {"SWAP H", cpu_cb_swap_h},        // 0x34
+    {"SWAP L", cpu_cb_swap_l},        // 0x35
+    {"SWAP (HL)", cpu_cb_swap_hl},    // 0x36
+    {"SWAP A", cpu_cb_swap_a},        // 0x37
+    {"SRL B", cpu_cb_srl_b},          // 0x38
+    {"SRL C", cpu_cb_srl_c},          // 0x39
+    {"SRL D", cpu_cb_srl_d},          // 0x3A
+    {"SRL E", cpu_cb_srl_e},          // 0x3B
+    {"SRL H", cpu_cb_srl_h},          // 0x3C
+    {"SRL L", cpu_cb_srl_l},          // 0x3D
+    {"SRL (HL)", cpu_cb_srl_hl},      // 0x3E
+    {"SRL A", cpu_cb_srl_a},          // 0x3F
+    {"BIT 0, B", cpu_cb_bit_0_b},     // 0x40
+    {"BIT 0, C", cpu_cb_bit_0_c},     // 0x41
+    {"BIT 0, D", cpu_cb_bit_0_d},     // 0x42
+    {"BIT 0, E", cpu_cb_bit_0_e},     // 0x43
+    {"BIT 0, H", cpu_cb_bit_0_h},     // 0x44
+    {"BIT 0, L", cpu_cb_bit_0_l},     // 0x45
+    {"BIT 0, (HL)", cpu_cb_bit_0_hl}, // 0x46
+    {"BIT 0, A", cpu_cb_bit_0_a},     // 0x47
+    {"BIT 1, B", cpu_cb_bit_1_b},     // 0x48
+    {"BIT 1, C", cpu_cb_bit_1_c},     // 0x49
+    {"BIT 1, D", cpu_cb_bit_1_d},     // 0x4A
+    {"BIT 1, E", cpu_cb_bit_1_e},     // 0x4B
+    {"BIT 1, H", cpu_cb_bit_1_h},     // 0x4C
+    {"BIT 1, L", cpu_cb_bit_1_l},     // 0x4D
+    {"BIT 1, (HL)", cpu_cb_bit_1_hl}, // 0x4E
+    {"BIT 1, A", cpu_cb_bit_1_a},     // 0x4F
+    {"BIT 2, B", cpu_cb_bit_2_b},     // 0x50
+    {"BIT 2, C", cpu_cb_bit_2_c},     // 0x51
+    {"BIT 2, D", cpu_cb_bit_2_d},     // 0x52
+    {"BIT 2, E", cpu_cb_bit_2_e},     // 0x53
+    {"BIT 2, H", cpu_cb_bit_2_h},     // 0x54
+    {"BIT 2, L", cpu_cb_bit_2_l},     // 0x55
+    {"BIT 2, (HL)", cpu_cb_bit_2_hl}, // 0x56
+    {"BIT 2, A", cpu_cb_bit_2_a},     // 0x57
+    {"BIT 3, B", cpu_cb_bit_3_b},     // 0x58
+    {"BIT 3, C", cpu_cb_bit_3_c},     // 0x59
+    {"BIT 3, D", cpu_cb_bit_3_d},     // 0x5A
+    {"BIT 3, E", cpu_cb_bit_3_e},     // 0x5B
+    {"BIT 3, H", cpu_cb_bit_3_h},     // 0x5C
+    {"BIT 3, L", cpu_cb_bit_3_l},     // 0x5D
+    {"BIT 3, (HL)", cpu_cb_bit_3_hl}, // 0x5E
+    {"BIT 3, A", cpu_cb_bit_3_a},     // 0x5F
+    {"BIT 4, B", cpu_cb_bit_4_b},     // 0x60
+    {"BIT 4, C", cpu_cb_bit_4_c},     // 0x61
+    {"BIT 4, D", cpu_cb_bit_4_d},     // 0x62
+    {"BIT 4, E", cpu_cb_bit_4_e},     // 0x63
+    {"BIT 4, H", cpu_cb_bit_4_h},     // 0x64
+    {"BIT 4, L", cpu_cb_bit_4_l},     // 0x65
+    {"BIT 4, (HL)", cpu_cb_bit_4_hl}, // 0x66
+    {"BIT 4, A", cpu_cb_bit_4_a},     // 0x67
+    {"BIT 5, B", cpu_cb_bit_5_b},     // 0x68
+    {"BIT 5, C", cpu_cb_bit_5_c},     // 0x69
+    {"BIT 5, D", cpu_cb_bit_5_d},     // 0x6A
+    {"BIT 5, E", cpu_cb_bit_5_e},     // 0x6B
+    {"BIT 5, H", cpu_cb_bit_5_h},     // 0x6C
+    {"BIT 5, L", cpu_cb_bit_5_l},     // 0x6D
+    {"BIT 5, (HL)", cpu_cb_bit_5_hl}, // 0x6E
+    {"BIT 5, A", cpu_cb_bit_5_a},     // 0x6F
+    {"BIT 6, B", cpu_cb_bit_6_b},     // 0x70
+    {"BIT 6, C", cpu_cb_bit_6_c},     // 0x71
+    {"BIT 6, D", cpu_cb_bit_6_d},     // 0x72
+    {"BIT 6, E", cpu_cb_bit_6_e},     // 0x73
+    {"BIT 6, H", cpu_cb_bit_6_h},     // 0x74
+    {"BIT 6, L", cpu_cb_bit_6_l},     // 0x75
+    {"BIT 6, (HL)", cpu_cb_bit_6_hl}, // 0x76
+    {"BIT 6, A", cpu_cb_bit_6_a},     // 0x77
+    {"BIT 7, B", cpu_cb_bit_7_b},     // 0x78
+    {"BIT 7, C", cpu_cb_bit_7_c},     // 0x79
+    {"BIT 7, D", cpu_cb_bit_7_d},     // 0x7A
+    {"BIT 7, E", cpu_cb_bit_7_e},     // 0x7B
+    {"BIT 7, H", cpu_cb_bit_7_h},     // 0x7C
+    {"BIT 7, L", cpu_cb_bit_7_l},     // 0x7D
+    {"BIT 7, (HL)", cpu_cb_bit_7_hl}, // 0x7E
+    {"BIT 7, A", cpu_cb_bit_7_a},     // 0x7F
+    {"RES 0, B", nullptr},            // 0x80
+    {"RES 0, C", nullptr},            // 0x81
+    {"RES 0, D", nullptr},            // 0x82
+    {"RES 0, E", nullptr},            // 0x83
+    {"RES 0, H", nullptr},            // 0x84
+    {"RES 0, L", nullptr},            // 0x85
+    {"RES 0, (HL)", nullptr},         // 0x86
+    {"RES 0, A", nullptr},            // 0x87
+    {"RES 1, B", nullptr},            // 0x88
+    {"RES 1, C", nullptr},            // 0x89
+    {"RES 1, D", nullptr},            // 0x8A
+    {"RES 1, E", nullptr},            // 0x8B
+    {"RES 1, H", nullptr},            // 0x8C
+    {"RES 1, L", nullptr},            // 0x8D
+    {"RES 1, (HL)", nullptr},         // 0x8E
+    {"RES 1, A", nullptr},            // 0x8F
+    {"RES 2, B", nullptr},            // 0x90
+    {"RES 2, C", nullptr},            // 0x91
+    {"RES 2, D", nullptr},            // 0x92
+    {"RES 2, E", nullptr},            // 0x93
+    {"RES 2, H", nullptr},            // 0x94
+    {"RES 2, L", nullptr},            // 0x95
+    {"RES 2, (HL)", nullptr},         // 0x96
+    {"RES 2, A", nullptr},            // 0x97
+    {"RES 3, B", nullptr},            // 0x98
+    {"RES 3, C", nullptr},            // 0x99
+    {"RES 3, D", nullptr},            // 0x9A
+    {"RES 3, E", nullptr},            // 0x9B
+    {"RES 3, H", nullptr},            // 0x9C
+    {"RES 3, L", nullptr},            // 0x9D
+    {"RES 3, (HL)", nullptr},         // 0x9E
+    {"RES 3, A", nullptr},            // 0x9F
+    {"RES 4, B", nullptr},            // 0xA0
+    {"RES 4, C", nullptr},            // 0xA1
+    {"RES 4, D", nullptr},            // 0xA2
+    {"RES 4, E", nullptr},            // 0xA3
+    {"RES 4, H", nullptr},            // 0xA4
+    {"RES 4, L", nullptr},            // 0xA5
+    {"RES 4, (HL)", nullptr},         // 0xA6
+    {"RES 4, A", nullptr},            // 0xA7
+    {"RES 5, B", nullptr},            // 0xA8
+    {"RES 5, C", nullptr},            // 0xA9
+    {"RES 5, D", nullptr},            // 0xAA
+    {"RES 5, E", nullptr},            // 0xAB
+    {"RES 5, H", nullptr},            // 0xAC
+    {"RES 5, L", nullptr},            // 0xAD
+    {"RES 5, (HL)", nullptr},         // 0xAE
+    {"RES 5, A", nullptr},            // 0xAF
+    {"RES 6, B", nullptr},            // 0xB0
+    {"RES 6, C", nullptr},            // 0xB1
+    {"RES 6, D", nullptr},            // 0xB2
+    {"RES 6, E", nullptr},            // 0xB3
+    {"RES 6, H", nullptr},            // 0xB4
+    {"RES 6, L", nullptr},            // 0xB5
+    {"RES 6, (HL)", nullptr},         // 0xB6
+    {"RES 6, A", nullptr},            // 0xB7
+    {"RES 7, B", nullptr},            // 0xB8
+    {"RES 7, C", nullptr},            // 0xB9
+    {"RES 7, D", nullptr},            // 0xBA
+    {"RES 7, E", nullptr},            // 0xBB
+    {"RES 7, H", nullptr},            // 0xBC
+    {"RES 7, L", nullptr},            // 0xBD
+    {"RES 7, (HL)", nullptr},         // 0xBE
+    {"RES 7, A", nullptr},            // 0xBF
+    {"SET 0, B", nullptr},            // 0xC0
+    {"SET 0, C", nullptr},            // 0xC1
+    {"SET 0, D", nullptr},            // 0xC2
+    {"SET 0, E", nullptr},            // 0xC3
+    {"SET 0, H", nullptr},            // 0xC4
+    {"SET 0, L", nullptr},            // 0xC5
+    {"SET 0, (HL)", nullptr},         // 0xC6
+    {"SET 0, A", nullptr},            // 0xC7
+    {"SET 1, B", nullptr},            // 0xC8
+    {"SET 1, C", nullptr},            // 0xC9
+    {"SET 1, D", nullptr},            // 0xCA
+    {"SET 1, E", nullptr},            // 0xCB
+    {"SET 1, H", nullptr},            // 0xCC
+    {"SET 1, L", nullptr},            // 0xCD
+    {"SET 1, (HL)", nullptr},         // 0xCE
+    {"SET 1, A", nullptr},            // 0xCF
+    {"SET 2, B", nullptr},            // 0xD0
+    {"SET 2, C", nullptr},            // 0xD1
+    {"SET 2, D", nullptr},            // 0xD2
+    {"SET 2, E", nullptr},            // 0xD3
+    {"SET 2, H", nullptr},            // 0xD4
+    {"SET 2, L", nullptr},            // 0xD5
+    {"SET 2, (HL)", nullptr},         // 0xD6
+    {"SET 2, A", nullptr},            // 0xD7
+    {"SET 3, B", nullptr},            // 0xD8
+    {"SET 3, C", nullptr},            // 0xD9
+    {"SET 3, D", nullptr},            // 0xDA
+    {"SET 3, E", nullptr},            // 0xDB
+    {"SET 3, H", nullptr},            // 0xDC
+    {"SET 3, L", nullptr},            // 0xDD
+    {"SET 3, (HL)", nullptr},         // 0xDE
+    {"SET 3, A", nullptr},            // 0xDF
+    {"SET 4, B", nullptr},            // 0xE0
+    {"SET 4, C", nullptr},            // 0xE1
+    {"SET 4, D", nullptr},            // 0xE2
+    {"SET 4, E", nullptr},            // 0xE3
+    {"SET 4, H", nullptr},            // 0xE4
+    {"SET 4, L", nullptr},            // 0xE5
+    {"SET 4, (HL)", nullptr},         // 0xE6
+    {"SET 4, A", nullptr},            // 0xE7
+    {"SET 5, B", nullptr},            // 0xE8
+    {"SET 5, C", nullptr},            // 0xE9
+    {"SET 5, D", nullptr},            // 0xEA
+    {"SET 5, E", nullptr},            // 0xEB
+    {"SET 5, H", nullptr},            // 0xEC
+    {"SET 5, L", nullptr},            // 0xED
+    {"SET 5, (HL)", nullptr},         // 0xEE
+    {"SET 5, A", nullptr},            // 0xEF
+    {"SET 6, B", nullptr},            // 0xF0
+    {"SET 6, C", nullptr},            // 0xF1
+    {"SET 6, D", nullptr},            // 0xF2
+    {"SET 6, E", nullptr},            // 0xF3
+    {"SET 6, H", nullptr},            // 0xF4
+    {"SET 6, L", nullptr},            // 0xF5
+    {"SET 6, (HL)", nullptr},         // 0xF6
+    {"SET 6, A", nullptr},            // 0xF7
+    {"SET 7, B", nullptr},            // 0xF8
+    {"SET 7, C", nullptr},            // 0xF9
+    {"SET 7, D", nullptr},            // 0xFA
+    {"SET 7, E", nullptr},            // 0xFB
+    {"SET 7, H", nullptr},            // 0xFC
+    {"SET 7, L", nullptr},            // 0xFD
+    {"SET 7, (HL)", nullptr},         // 0xFE
+    {"SET 7, A", nullptr},            // 0xFF
 };

@@ -415,9 +415,77 @@ void cpu_cb_srl_hl();  // 0x3E
 void cpu_cb_srl_a();   // 0x3F
 
 // 0x4
+void cpu_cb_bit_0_b();  // 0x40
+void cpu_cb_bit_0_c();  // 0x41
+void cpu_cb_bit_0_d();  // 0x42
+void cpu_cb_bit_0_e();  // 0x43
+void cpu_cb_bit_0_h();  // 0x44
+void cpu_cb_bit_0_l();  // 0x45
+void cpu_cb_bit_0_hl(); // 0x46
+void cpu_cb_bit_0_a();  // 0x47
+void cpu_cb_bit_1_b();  // 0x48
+void cpu_cb_bit_1_c();  // 0x49
+void cpu_cb_bit_1_d();  // 0x4A
+void cpu_cb_bit_1_e();  // 0x4B
+void cpu_cb_bit_1_h();  // 0x4C
+void cpu_cb_bit_1_l();  // 0x4D
+void cpu_cb_bit_1_hl(); // 0x4E
+void cpu_cb_bit_1_a();  // 0x4F
+
 // 0x5
+void cpu_cb_bit_2_b();  // 0x50
+void cpu_cb_bit_2_c();  // 0x51
+void cpu_cb_bit_2_d();  // 0x52
+void cpu_cb_bit_2_e();  // 0x53
+void cpu_cb_bit_2_h();  // 0x54
+void cpu_cb_bit_2_l();  // 0x55
+void cpu_cb_bit_2_hl(); // 0x56
+void cpu_cb_bit_2_a();  // 0x57
+void cpu_cb_bit_3_b();  // 0x58
+void cpu_cb_bit_3_c();  // 0x59
+void cpu_cb_bit_3_d();  // 0x5A
+void cpu_cb_bit_3_e();  // 0x5B
+void cpu_cb_bit_3_h();  // 0x5C
+void cpu_cb_bit_3_l();  // 0x5D
+void cpu_cb_bit_3_hl(); // 0x5E
+void cpu_cb_bit_3_a();  // 0x5F
+
 // 0x6
+void cpu_cb_bit_4_b();  // 0x60
+void cpu_cb_bit_4_c();  // 0x61
+void cpu_cb_bit_4_d();  // 0x62
+void cpu_cb_bit_4_e();  // 0x63
+void cpu_cb_bit_4_h();  // 0x64
+void cpu_cb_bit_4_l();  // 0x65
+void cpu_cb_bit_4_hl(); // 0x66
+void cpu_cb_bit_4_a();  // 0x67
+void cpu_cb_bit_5_b();  // 0x68
+void cpu_cb_bit_5_c();  // 0x69
+void cpu_cb_bit_5_d();  // 0x6A
+void cpu_cb_bit_5_e();  // 0x6B
+void cpu_cb_bit_5_h();  // 0x6C
+void cpu_cb_bit_5_l();  // 0x6D
+void cpu_cb_bit_5_hl(); // 0x6E
+void cpu_cb_bit_5_a();  // 0x6F
+
 // 0x7
+void cpu_cb_bit_6_b();  // 0x70
+void cpu_cb_bit_6_c();  // 0x71
+void cpu_cb_bit_6_d();  // 0x72
+void cpu_cb_bit_6_e();  // 0x73
+void cpu_cb_bit_6_h();  // 0x74
+void cpu_cb_bit_6_l();  // 0x75
+void cpu_cb_bit_6_hl(); // 0x76
+void cpu_cb_bit_6_a();  // 0x77
+void cpu_cb_bit_7_b();  // 0x78
+void cpu_cb_bit_7_c();  // 0x79
+void cpu_cb_bit_7_d();  // 0x7A
+void cpu_cb_bit_7_e();  // 0x7B
+void cpu_cb_bit_7_h();  // 0x7C
+void cpu_cb_bit_7_l();  // 0x7D
+void cpu_cb_bit_7_hl(); // 0x7E
+void cpu_cb_bit_7_a();  // 0x7F
+
 // 0x8
 // 0x9
 // 0xA

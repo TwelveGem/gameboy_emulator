@@ -371,3 +371,11 @@
         SET_FLAG_ZERO(reg8 == 0);                                                                                      \
         core_advance_cpu_clocks(4);                                                                                    \
     }
+
+#define cpu_routine_test_bit(reg8, bitnum)                                                                             \
+    {                                                                                                                  \
+        SET_FLAG_SUBTRACT(0);                                                                                          \
+        SET_FLAG_HALF_CARRY(1);                                                                                        \
+        SET_FLAG_ZERO(GET_BIT(reg8, bitnum) == 0);                                                                     \
+        core_advance_cpu_clocks(4);                                                                                    \
+    }
