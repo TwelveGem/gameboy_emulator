@@ -1,6 +1,7 @@
 #include "emulator_core.h"
 #include "cart.h"
 #include "cpu.h"
+#include "timer.h"
 
 uint32_t core_clock_counter = 0;
 bool core_quit_requested = false;
@@ -21,13 +22,14 @@ void core_run() {
     cpu_reset();
 
     while (!core_quit_requested) {
-        cpu_fetch();
-        if (!cpu_execute()) {
-            core_quit_requested = true;
-        }
+        cpu_tick();
     }
 }
 
 void core_shutdown() {}
 
-void core_advance_cpu_clocks(uint8_t clocks) { core_clock_counter += clocks; }
+void core_advance_cpu_clocks(uint8_t clocks) {
+    timer_advance_clocks(clocks);
+
+    core_clock_counter += clocks;
+}
