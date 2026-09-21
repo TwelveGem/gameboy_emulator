@@ -1,0 +1,39 @@
+#include "debug_log.h"
+#include <cstdarg>
+#include <cstdio>
+
+bool log_to_console = true;
+bool log_to_file = true;
+static FILE *logfile = NULL;
+
+void debug_log(const char *fmt, ...) {
+    va_list args;
+
+    if (log_to_console) {
+        va_start(args, fmt);
+        vfprintf(stderr, fmt, args);
+        va_end(args);
+    }
+
+    if (log_to_file) {
+        if (logfile == NULL) {
+            logfile = fopen("logfile.txt", "w");
+            if (logfile == NULL) {
+                printf("Failed to open logfile.txt for writing!\n");
+                log_to_file = false;
+                return;
+            }
+        }
+        va_start(args, fmt);
+        vfprintf(logfile, fmt, args);
+        va_end(args);
+    }
+}
+
+void debug_log_close_file() {
+    if (logfile) {
+        log_to_file = false;
+        fclose(logfile);
+        logfile = NULL;
+    }
+}
