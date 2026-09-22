@@ -72,7 +72,10 @@ uint8_t memory_bus_read(const uint16_t addr) {
         }
         return memory[addr];
     }
-    if (addr >= 0xFF80 && addr <= 0xFFFE) { // Interrupt Enable register
+    if (addr >= 0xFF80 && addr <= 0xFFFE) { // HRAM
+        return memory[addr];
+    }
+    if (addr == ADDR_IO_IE) { // Interrupt Enable register
         return memory[addr];
     }
 
