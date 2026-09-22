@@ -13,7 +13,7 @@ struct cart_header_struct {
     uint8_t cgb_flag;
     uint8_t new_licensee_code[2];
     uint8_t sgb_flag;
-    uint8_t catridge_type;
+    uint8_t cartridge_type;
     uint8_t rom_size;
     uint8_t ram_size;
     uint8_t destination_code;
@@ -24,7 +24,7 @@ struct cart_header_struct {
     uint8_t global_checksum_lo;
 };
 
-extern cart_header_struct *cart_header;
+extern cart_header_struct *cartridge_header;
 
 bool cart_open_file();
 void cart_print_info();

@@ -9,6 +9,7 @@ const uint16_t ADDR_IO_IF = 0xFF0F; // Interrupt flag
 const uint16_t ADDR_IO_IE = 0xFFFF; // Interrupt enable
 
 constexpr uint32_t MEMORY_SIZE = 64 * 1024;
+constexpr uint32_t ERAM_SIZE = 8 * 4 * 1024;
 
 extern uint8_t memory[MEMORY_SIZE];
 
