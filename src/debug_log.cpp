@@ -2,7 +2,7 @@
 #include <cstdarg>
 #include <cstdio>
 
-bool log_to_console = true;
+bool log_to_console = false;
 bool log_to_file = true;
 static FILE *logfile = NULL;
 

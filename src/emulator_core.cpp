@@ -7,9 +7,11 @@ uint32_t core_clock_counter = 0;
 bool core_quit_requested = false;
 
 int core_init() {
-    const char *game_path = "./games/rhythm-land.gb";
+    // const char *game_path = "./games/gb-test-roms/instr_timing/instr_timing.gb";
+    const char *game_path = "./games/gb-test-roms/cpu_instrs/cpu_instrs.gb";
 
     if (!cart_load(game_path)) {
+        // if (!cart_open_file()) {
         return -1;
     }
 
