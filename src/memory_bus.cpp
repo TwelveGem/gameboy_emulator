@@ -64,6 +64,12 @@ uint8_t memory_bus_read(const uint16_t addr) {
         return 0x00;
     }
     if (addr >= 0xFF00 && addr <= 0xFF7F) { // I/O registers
+        // KEY1: the DMG has no speed switch, so this register is unmapped and reads
+        // back 0xFF. CGB-aware ROMs test bit 7 here and skip their STOP-based speed
+        // switch when it reads high.
+        if (addr == ADDR_IO_KEY1) {
+            return 0xFF;
+        }
         return memory[addr];
     }
     if (addr >= 0xFF80 && addr <= 0xFFFE) { // Interrupt Enable register
@@ -148,6 +154,7 @@ void memory_bus_write(const uint16_t addr, const uint8_t value) {
         if (addr == 0xFF02 && value == 0x81) {
             char c = memory[0xFF01];
             printf("%c", c);
+            fflush(stdout);
         } else if (addr == 0xFF04) { // Timer DIV
             timer_on_div_write(value);
         } else if (addr == 0xFF07) { // Timer control
