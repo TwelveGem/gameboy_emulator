@@ -23,7 +23,7 @@ uint8_t memory_bus_read(const uint16_t addr) {
     if (addr >= 0x4000 && addr <= 0x7FFF) { // Read from ROM bank 01-NN
         if (cart_info.type == CART_TYPE::NO_MBC) {
             return cartridge_data[addr]; // For no MBC cartridges
-        } else if (cart_info.type == CART_TYPE::MBC1) {
+        } else if (cart_info.type == CART_TYPE::MBC1 || cart_info.type == CART_TYPE::MBC2) {
             const uint16_t ROM_BANK_SIZE = 0x4000; // 16k per ROM bank
             uint8_t rom_bank = rom_bank_number > 0 ? rom_bank_number : 1;
             const uint32_t offset = ROM_BANK_SIZE * (rom_bank - 1);
@@ -37,10 +37,13 @@ uint8_t memory_bus_read(const uint16_t addr) {
         if (cart_info.type == CART_TYPE::NO_MBC) {
             const uint16_t eram_address = (addr - 0xA000);
             return eram[eram_address];
-        } else if (cart_info.type == CART_TYPE::MBC1) {
+        } else if (cart_info.type == CART_TYPE::MBC1 && ram_enabled) {
             const uint16_t bank_offset = ram_bank_number * 0x2000;
             const uint16_t eram_address = (addr - 0xA000) + bank_offset;
             return eram[eram_address];
+        } else if (cart_info.type == CART_TYPE::MBC2 && ram_enabled) {
+            const uint16_t offset = (addr - 0xA000) % 0x0200;
+            return 0xF0 | (0x0F & eram[offset]);
         }
     }
     if (addr >= 0xC000 && addr <= 0xCFFF) { // Work RAM 1
@@ -94,18 +97,34 @@ void memory_bus_write(const uint16_t addr, const uint8_t value) {
         }
     }
 
+    if (cart_info.type == CART_TYPE::MBC2) {
+        if (addr >= 0x0000 && addr <= 0x3FFF) {
+            if ((0x0100 & addr) == 0) {
+                ram_enabled = (value & 0x0F) == 0x0A;
+            } else {
+                rom_bank_number = value & 0x0F;
+                const uint32_t rom_size = 32 * (1 << cartridge_header->rom_size);
+                const uint8_t number_of_rom_banks = rom_size / 16;
+                rom_bank_number = rom_bank_number % number_of_rom_banks;
+            }
+        }
+    }
+
     if (addr >= 0x8000 && addr <= 0x9FFF) { // VRAM
         // TODO: If PPU is in mode 3, the CPU cannot access VRAM
         memory[addr] = value;
     }
     if (addr >= 0xA000 && addr <= 0xBFFF) { // ERAM
-        if (cart_info.type == CART_TYPE::NO_MBC) {
+        if (cart_info.type == CART_TYPE::NO_MBC && ram_enabled) {
             eram[addr - 0xA000] = value;
         } else if (cart_info.type == CART_TYPE::MBC1) {
             const uint16_t RAM_BANK_SIZE = 0x2000; // 8k per ROM bank
             const uint32_t offset = RAM_BANK_SIZE * ram_bank_number;
             const uint16_t eram_address = offset + (addr - 0xA000);
             eram[eram_address] = value;
+        } else if (cart_info.type == CART_TYPE::MBC2 && ram_enabled) {
+            const uint16_t offset = addr & 0x01FF;
+            eram[offset] = value & 0x0F;
         }
     }
     if (addr >= 0xC000 && addr <= 0xCFFF) { // WRAM 1
