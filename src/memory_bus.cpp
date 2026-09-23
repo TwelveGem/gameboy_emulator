@@ -57,6 +57,16 @@ uint8_t read_external_ram(const uint16_t addr) {
         const uint16_t offset = (addr - 0xA000) % 0x0200;
 
         return 0xF0 | (0x0F & eram[offset]);
+
+    } else if (cart_info.type == CART_TYPE::MBC3 && ram_enabled) {
+        if (ram_bank_number <= 0x07) {
+            const uint16_t bank_offset = ram_bank_number * 0x2000;
+            const uint16_t eram_address = (addr - 0xA000) + bank_offset;
+
+            return eram[eram_address];
+        } else if (ram_bank_number <= 0x0C) {
+            // TODO: RTC register
+        }
     }
 
     return 0xFF;
@@ -132,6 +142,30 @@ void register_write_mbc2(const uint16_t addr, const uint8_t value) {
     }
 }
 
+void register_write_mbc3(const uint16_t addr, const uint8_t value) {
+    assert(addr >= 0x0000 && addr <= 0x7FFF);
+
+    if (addr <= 0x1FFF) {
+        ram_enabled = (value & 0x0F) == 0x0A;
+    }
+
+    if (addr >= 0x2000 && addr <= 0x3FFF) {
+        uint8_t bank = value & 0x7F;
+        if (bank == 0) {
+            bank = 1;
+        }
+        rom_bank_number = bank;
+    }
+
+    if (addr >= 0x4000 && addr <= 0x5FFF) {
+        ram_bank_number = value & 0x0F;
+    }
+
+    if (addr >= 0x6000 && addr <= 0x7FFF) {
+        // TODO: Latch RTC
+    }
+}
+
 // ADDR must be between 0x8000 and 0x9FFF
 void write_vram(const uint16_t addr, const uint8_t value) {
     assert(addr >= 0x8000 && addr <= 0x9FFF);
@@ -155,6 +189,13 @@ void write_external_ram(const uint16_t addr, const uint8_t value) {
     } else if (cart_info.type == CART_TYPE::MBC2 && ram_enabled) {
         const uint16_t offset = addr & 0x01FF;
         eram[offset] = value & 0x0F;
+    } else if (cart_info.type == CART_TYPE::MBC3 && ram_enabled) {
+        if (ram_bank_number >= 0x00 && ram_bank_number <= 0x07) {
+            const uint16_t RAM_BANK_SIZE = 0x2000;
+            const uint32_t offset = RAM_BANK_SIZE * ram_bank_number;
+            const uint16_t eram_address = offset * (addr - 0xA000);
+            eram[eram_address] = value;
+        }
     }
 }
 
@@ -190,6 +231,9 @@ void memory_bus_write(const uint16_t addr, const uint8_t value) {
             break;
         case CART_TYPE::MBC2:
             register_write_mbc2(addr, value);
+            break;
+        case CART_TYPE::MBC3:
+            register_write_mbc3(addr, value);
             break;
         default:
             assert(false);
