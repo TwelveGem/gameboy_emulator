@@ -26,19 +26,13 @@ uint8_t read_rom_banks(const uint16_t addr) {
     if (cart_info.type == CART_TYPE::NO_MBC) {
         return cartridge_data[addr]; // For no MBC cartridges
 
-    } else if (cart_info.type == CART_TYPE::MBC1 || cart_info.type == CART_TYPE::MBC2) {
+    } else if (cart_info.type == CART_TYPE::MBC1 || cart_info.type == CART_TYPE::MBC2 ||
+               cart_info.type == CART_TYPE::MBC3) {
         const uint16_t ROM_BANK_SIZE = 0x4000; // 16k per ROM bank
         const uint16_t rom_bank = rom_bank_number % rom_bank_count();
         const uint32_t offset = ROM_BANK_SIZE * rom_bank;
 
         return cartridge_data[offset + (addr - 0x4000)];
-
-    } else if (cart_info.type == CART_TYPE::MBC3) {
-        const uint16_t ROM_BANK_SIZE = 0x4000;
-        uint8_t rom_bank = rom_bank_number > 0 ? rom_bank_number : 1;
-        const uint32_t offset = ROM_BANK_SIZE * (rom_bank - 1);
-
-        return cartridge_data[offset + addr];
     }
 
     return 0xFF;
