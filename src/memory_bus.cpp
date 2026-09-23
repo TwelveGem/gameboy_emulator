@@ -27,7 +27,7 @@ uint8_t read_rom_banks(const uint16_t addr) {
         return cartridge_data[addr]; // For no MBC cartridges
 
     } else if (cart_info.type == CART_TYPE::MBC1 || cart_info.type == CART_TYPE::MBC2 ||
-               cart_info.type == CART_TYPE::MBC3) {
+               cart_info.type == CART_TYPE::MBC3 || cart_info.type == CART_TYPE::MBC5) {
         const uint16_t ROM_BANK_SIZE = 0x4000; // 16k per ROM bank
         const uint16_t rom_bank = rom_bank_number % rom_bank_count();
         const uint32_t offset = ROM_BANK_SIZE * rom_bank;
@@ -47,7 +47,7 @@ uint8_t read_external_ram(const uint16_t addr) {
 
         return eram[eram_address];
 
-    } else if (cart_info.type == CART_TYPE::MBC1 && ram_enabled) {
+    } else if ((cart_info.type == CART_TYPE::MBC1 || cart_info.type == CART_TYPE::MBC5) && ram_enabled) {
         const uint16_t bank_offset = ram_bank_number * 0x2000;
         const uint16_t eram_address = (addr - 0xA000) + bank_offset;
 
@@ -166,6 +166,30 @@ void register_write_mbc3(const uint16_t addr, const uint8_t value) {
     }
 }
 
+void register_write_mbc5(const uint16_t addr, const uint8_t value) {
+    assert(addr >= 0x0000 && addr <= 0x5FFF);
+
+    if (addr <= 0x1FFF) {
+        ram_enabled = (value & 0x0F) == 0x0A;
+    }
+
+    if (addr >= 0x2000 && addr <= 0x2FFF) {
+        rom_bank_number = value;
+    }
+
+    if (addr >= 0x3000 && addr <= 0x3FFF) {
+        rom_bank_number = (rom_bank_number & 0x00FF) | ((value & 0x01) << 8);
+    }
+
+    if (addr >= 0x4000) {
+        if (value <= 0x0F) {
+            ram_bank_number = value;
+        } else {
+            // TODO: Rumble
+        }
+    }
+}
+
 // ADDR must be between 0x8000 and 0x9FFF
 void write_vram(const uint16_t addr, const uint8_t value) {
     assert(addr >= 0x8000 && addr <= 0x9FFF);
@@ -234,6 +258,9 @@ void memory_bus_write(const uint16_t addr, const uint8_t value) {
             break;
         case CART_TYPE::MBC3:
             register_write_mbc3(addr, value);
+            break;
+        case CART_TYPE::MBC5:
+            register_write_mbc5(addr, value);
             break;
         default:
             assert(false);
