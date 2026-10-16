@@ -280,7 +280,7 @@
     {                                                                                                                  \
         core_advance_cpu_clocks(4);                                                                                    \
         if (cond) {                                                                                                    \
-            uint32_t macro_temp = memory_bus_read(cpu_registers.pc++);                                                 \
+            uint8_t macro_temp = memory_bus_read(cpu_registers.pc++);                                                  \
             core_advance_cpu_clocks(4);                                                                                \
             cpu_registers.pc += (int8_t)macro_temp & 0xFFFF;                                                           \
             core_advance_cpu_clocks(4);                                                                                \

@@ -2,8 +2,8 @@
 #include <cstdarg>
 #include <cstdio>
 
-bool log_to_console = true;
-bool log_to_file = true;
+bool log_to_console = false;
+bool log_to_file = false;
 static FILE *logfile = NULL;
 
 void debug_log(const char *fmt, ...) {
